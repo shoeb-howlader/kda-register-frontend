@@ -67,12 +67,12 @@ input[type="number"]::-webkit-inner-spin-button {
     letter-spacing: .3px;
 }
 
-.customer-badge.status-qualified {
+.customer-badge.status-Active {
     background-color: #C8E6C9;
     color: #256029;
 }
 
-.customer-badge.status-unqualified {
+.customer-badge.status-Inactive {
     background-color: #FFCDD2;
     color: #C63737;
 }
@@ -82,7 +82,7 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #8A5340;
 }
 
-.customer-badge.status-new {
+.customer-badge.status-Instock {
     background-color: #B3E5FC;
     color: #23547B;
 }
@@ -200,3 +200,9 @@ img.flag {
     color: #C63737;
 }
 
+.country-item-value {
+    
+    display: inline-flex;
+    margin-right: .5rem;
+
+}

@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="card">
-      <h5>Filter Menu</h5>
+      <h5>All Products </h5>
       <p>Filters are displayed in an overlay.</p>
       <DataTable
         :value="products"
+        ref="dt"
         :paginator="true"
         class="p-datatable-customers"
         showGridlines
@@ -17,25 +18,31 @@
         :globalFilterFields="['CurrentUser', 'supplier']"
       >
         <template #header>
+          
           <div class="p-d-flex p-jc-between">
-            <Button
+            <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" class="p-button-raised p-ml-2" />
+            <div> <Button
               type="button"
               icon="pi pi-filter-slash"
               label="Clear"
-              class="p-button-outlined"
+              class="p-button-outlined p-button-raised"
               @click="clearFilter1()"
             />
-            <span class="p-input-icon-left">
+            
+            <span class="p-input-icon-left p-ml-2">
               <i class="pi pi-search" />
               <InputText
                 v-model="filters1['global'].value"
                 placeholder="Keyword Search"
               />
             </span>
+            </div>
+           
+            
           </div>
         </template>
         <template #empty>No customers found.</template>
-        <template #loading>Loading customers data. Please wait.</template>
+        <template #loading>Loading Products data. Please wait.</template>
         <Column
           field="CurrentUser"
           header="Current User"
@@ -52,6 +59,7 @@
           </template>
         </Column>
         <Column
+          field="supplier"
           header="Supplier"
           filterField="supplier"
           style="min-width: 12rem"
@@ -90,6 +98,7 @@
           </template>
         </Column>
         <Column
+        field="category"
           header="Category"
           filterField="category"
           :showFilterMatchModes="false"
@@ -118,19 +127,20 @@
           </template>
         </Column>
         <Column
+        field="date"
           header="Purchase date"
           filterField="date"
           data-type="date"
           style="min-width: 10rem"
         >
           <template #body="{ data }">{{
-            formatDate(data.purchaseDate)
+            formatDate(data.date)
           }}</template>
           <template #filter="{ filterModel }">
             <Calendar
               v-model="filterModel.value"
-              dateFormat="mm/dd/yy"
-              placeholder="mm/dd/yyyy"
+              dateFormat="dd/mm/yy"
+              placeholder="dd/mm/yy"
             />
           </template>
         </Column>
@@ -138,36 +148,41 @@
         <Column
           field="status"
           header="Status"
+          :showFilterMatchModes="false"
           :filterMenuStyle="{ width: '14rem' }"
           style="min-width: 12rem"
         >
           <template #body="{ data }">
-            <span :class="'customer-badge status-' + data.status">
-              {{ data.status }}
-            </span>
+            <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
           </template>
           <template #filter="{ filterModel }">
-            <Dropdown
+            <div class="p-mb-3 p-text-bold">Select Status</div>
+            <MultiSelect
               v-model="filterModel.value"
               :options="statuses"
+              optionLabel="name"
+              optionValue="value"
               placeholder="Any"
               class="p-column-filter"
               :showClear="true"
             >
-              <template #value="slotProps">
-                <span
-                  :class="'customer-badge status-' + slotProps.value"
-                  v-if="slotProps.value"
-                  >{{ slotProps.value }}</span
-                >
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
+             <template #value="slotProps">
+                <div class="country-item country-item-value" v-for="option of slotProps.value" :key="option.code">
+                    <span :class="'customer-badge status-' + option">
+                  {{ option }}
+                </span> 
+                </div>
+                <template v-if="!slotProps.value || slotProps.value.length === 0">
+                    Any
+                </template>
+            </template>
+
               <template #option="slotProps">
-                <span :class="'customer-badge status-' + slotProps.option">
-                  {{ slotProps.option }}
+                <span :class="'customer-badge status-' + slotProps.option.name">
+                  {{ slotProps.option.name }}
                 </span>
               </template>
-            </Dropdown>
+            </MultiSelect>
           </template>
         </Column>
         <Column :exportable="false" style="min-width: 8rem">
@@ -187,173 +202,8 @@
       </DataTable>
     </div>
 
-    <div class="card">
-      <h5>Filter Row</h5>
-      <p>Filters are displayed inline within a separate row.</p>
-      <DataTable
-        :value="customers2"
-        :paginator="true"
-        class="p-datatable-customers"
-        :rows="10"
-        data-key="id"
-        v-model:filters="filters2"
-        filterDisplay="row"
-        :loading="loading2"
-        responsiveLayout="scroll"
-        :globalFilterFields="[
-          'name',
-          'country.name',
-          'representative.name',
-          'status',
-        ]"
-      >
-        <template #header>
-          <div class="p-d-flex p-jc-end">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-              <InputText
-                v-model="filters2['global'].value"
-                placeholder="Keyword Search"
-              />
-            </span>
-          </div>
-        </template>
-        <template #empty>No customers found.</template>
-        <template #loading>Loading customers data. Please wait.</template>
-        <Column field="name" header="Name" style="min-width: 12rem">
-          <template #body="{ data }">{{ data.name }}</template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @keydown.enter="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by name - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Country"
-          filterField="country.name"
-          style="min-width: 12rem"
-        >
-          <template #body="{ data }">
-            <img
-              src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-              width="30"
-            />
-            <span class="image-text">{{ data.country.name }}</span>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              placeholder="Search by country"
-              v-tooltip.top.focus="'Filter as you type'"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Agent"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-        >
-          <template #body="{ data }">
-            <img
-              :alt="data.representative.name"
-              src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-              width="32"
-              style="vertical-align: middle"
-            />
-            <span class="image-text">{{ data.representative.name }}</span>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <MultiSelect
-              v-model="filterModel.value"
-              @change="filterCallback()"
-              :options="representatives"
-              optionLabel="name"
-              placeholder="Any"
-              class="p-column-filter"
-            >
-              <template #option="slotProps">
-                <div class="p-multiselect-representative-option">
-                  <img
-                    :alt="slotProps.option.name"
-                    src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-                    width="32"
-                    style="vertical-align: middle"
-                  />
-                  <span class="image-text">{{ slotProps.option.name }}</span>
-                </div>
-              </template>
-            </MultiSelect>
-          </template>
-        </Column>
-        <Column
-          field="status"
-          header="Status"
-          :showFilterMenu="false"
-          style="min-width: 12rem"
-        >
-          <template #body="{ data }">
-            <span :class="'customer-badge status-' + data.status">
-              {{ data.status }}
-            </span>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
-              v-model="filterModel.value"
-              @change="filterCallback()"
-              :options="statuses"
-              placeholder="Any"
-              class="p-column-filter"
-              :showClear="true"
-            >
-              <template #value="slotProps">
-                <span
-                  :class="'customer-badge status-' + slotProps.value"
-                  v-if="slotProps.value"
-                  >{{ slotProps.value }}</span
-                >
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <span :class="'customer-badge status-' + slotProps.option">
-                  {{ slotProps.option }}
-                </span>
-              </template>
-            </Dropdown>
-          </template>
-        </Column>
-        <Column
-          field="verified"
-          header="Verified"
-          data-type="boolean"
-          style="min-width: 6rem"
-        >
-          <template #body="{ data }">
-            <i
-              class="pi"
-              :class="{
-                'true-icon pi-check-circle': data.verified,
-                'false-icon pi-times-circle': !data.verified,
-              }"
-            ></i>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <TriStateCheckbox
-              v-model="filterModel.value"
-              @change="filterCallback()"
-            />
-          </template>
-        </Column>
-      </DataTable>
-    </div>
+    <ConfirmDialog></ConfirmDialog>
+    <Toast />
   </div>
 </template>
 
@@ -399,12 +249,9 @@ export default {
 
       ],
       statuses: [
-        "unqualified",
-        "qualified",
-        "new",
-        "negotiation",
-        "renewal",
-        "proposal",
+        { name: "Active", value: "Active" },
+        { name: "Inactive", value: "Inactive" },
+        { name: "Instock", value: "Instock" },
       ],
       loading1: true,
       loading2: true,
@@ -441,7 +288,7 @@ export default {
   },
   methods: {
     formatDate(value) {
-      return value.toLocaleDateString("en-US", {
+      return value.toLocaleDateString('en-GB', {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -480,14 +327,46 @@ export default {
           operator: FilterOperator.AND,
           constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
         },
-        status: {
-          operator: FilterOperator.OR,
-          constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-        },
+        status: { value: null, matchMode: FilterMatchMode.EQUALS},
         activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
         verified: { value: null, matchMode: FilterMatchMode.EQUALS },
       };
     },
+
+     exportCSV() {
+            this.$refs.dt.exportCSV();
+        },
+        confirmDeleteProduct(product)
+        {
+          console.log(product.id)
+           let id=product.id
+         this.$confirm.require({
+                message: 'Do you want to delete this record?',
+                header: 'Delete Confirmation',
+                icon: 'pi pi-info-circle',
+                acceptClass: 'p-button-danger',
+                accept: () => {
+
+                    fetch('http://localhost:3000/projects/'+id,{
+                    method:'DELETE',
+                })
+                .then(()=>{
+                   
+                     this.products=this.products.filter((product)=>{
+                       return product.id!==id
+                          })
+                  this.$toast.add({severity:'success', summary:'Confirmed', detail:'Record deleted', life: 3000});
+                })
+                .catch(err=>{
+                  this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
+                  console.log(err)})
+                    
+                },
+                reject: () => {
+                    this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+                }
+            });
+        }
   },
 };
 </script>

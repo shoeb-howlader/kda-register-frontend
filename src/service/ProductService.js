@@ -9,7 +9,7 @@ export default class ProductService {
 
         let response = await fetch('http://localhost:3000/projects');
         let data = await response.json();
-        data.forEach(product => product.purchaseDate = new Date(product.purchaseDate));
+        data.forEach(product => product.date = new Date(product.date));
         console.log(data);
         return data;
     }
