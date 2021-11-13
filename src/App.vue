@@ -1,6 +1,8 @@
 <template>
-  <div id="nav">
+  <div class="p-grid p-jc-center">
+<div class="p-col-12 p-md-12 p-sm-12 p-lg-8" >
 <TabMenu :model="items"  class="p-mx-auto"/>
+  </div>
   </div>
   <router-view/>
 </template>

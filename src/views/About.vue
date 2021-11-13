@@ -1,41 +1,36 @@
-
-<template>
-    <div>
-        <DataTable :value="products" ref="dt" responsiveLayout="scroll">
-            <template #header>
-                <div style="text-align: left">
-                    <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" />
-                </div>
+<template lang="">
+  <Toast position="top-left" />
+  <div class="p-d-inline-flex p-mt-3">
+        <Card style="width: 25rem; margin-bottom: 2em">
+            <template #title>
+                About
             </template>
-            <Column field="code" header="Code"></Column>
-            <Column field="name" header="Name bbnbnbnbn "></Column>
-            <Column field="category" header="Category"></Column>
-            <Column field="quantity" header="Quantity"></Column>
-        </DataTable>
-    </div>
-</template>
+            <template #content>
+                <p>Design and developed By </p>
+                <p>Md Shoeb Howlader</p>
+                <p>Assistant programmer, KDA</p>
+            </template>
+        </Card>
+        
 
+  </div>
+</template>
 <script>
-import ProductService from "../service/ProductService";
+import EditForm from '../components/editForm.vue'
+import InputForm from '../components/InputForm.vue'
 
 export default {
+    components: { InputForm, EditForm
+
+    },
     data() {
         return {
-            products: null
         }
-    },
-    productService: null,
-    created() {
-        this.productService = new ProductService();
-    },
-    mounted() {
-        this.productService.getProductsSmall().then(data => this.products = data);
     },
     methods: {
-        exportCSV() {
-            this.$refs.dt.exportCSV();
-        }
-    }
-}
+        
+}}
 </script>
+<style lang="">
 
+</style>
