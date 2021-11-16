@@ -400,25 +400,9 @@
       "id": 2
     },
     {
-      "category": "computer",
-      "CurrentUser": "abul hayat ",
-      "productDescription": "sjhjhsjas",
-      "status": "Active",
-      "supplier": "jim conts ",
-      "date": "2021-11-01T18:00:00.000Z",
-      "userDetails": [
-        {
-          "name": "abul hayat ",
-          "date": "2021-11-28T18:00:00.000Z",
-          "comment": "askaskajsk"
-        }
-      ],
-      "id": 3
-    },
-    {
       "category": "speaker",
       "CurrentUser": "shoeb ",
-      "productDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "productDescription": "processor: core i5 \nmotherboard: Gigabyte \nSSD: 500GB",
       "status": "Instock",
       "supplier": "JIm ",
       "date": "2021-11-16T18:00:00.000Z",
@@ -430,22 +414,6 @@
         }
       ],
       "id": 4
-    },
-    {
-      "category": "computer",
-      "CurrentUser": "test data",
-      "productDescription": "description ndsndmsn ",
-      "status": "Instock",
-      "supplier": "Ma Computer ",
-      "date": "2021-11-16T18:00:00.000Z",
-      "userDetails": [
-        {
-          "name": "test data",
-          "date": "2021-11-21T18:00:00.000Z",
-          "comment": "test"
-        }
-      ],
-      "id": 5
     },
     {
       "category": "UPS",
@@ -462,27 +430,6 @@
         }
       ],
       "id": 6
-    },
-    {
-      "category": "camera",
-      "CurrentUser": "reload test 2 ",
-      "productDescription": "reload test ",
-      "status": "Instock",
-      "supplier": "sdhgshdghsgd ",
-      "date": "2021-11-16T18:00:00.000Z",
-      "userDetails": [
-        {
-          "name": "reload test 2 ",
-          "date": "2021-11-29T18:00:00.000Z",
-          "comment": "2nd user"
-        },
-        {
-          "name": "reload test ",
-          "date": "2021-11-28T18:00:00.000Z",
-          "comment": "jwjdhwjhejwhej"
-        }
-      ],
-      "id": 7
     }
   ],
   "cars": [
