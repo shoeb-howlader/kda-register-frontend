@@ -386,7 +386,7 @@
     {
       "category": "computer",
       "CurrentUser": "djshdjhsd",
-      "productDescription": "ksdjkhasdj",
+      "productDescription": "processor: core i5 ",
       "status": "Active",
       "supplier": "Ma Computer",
       "date": "2021-11-02T18:00:00.000Z",
@@ -418,7 +418,7 @@
     {
       "category": "UPS",
       "CurrentUser": "shoeb ",
-      "productDescription": "this is description",
+      "productDescription": "<h1><strong style=\"font-family: times-new-roman;\">this is description:</strong></h1><p><br></p><p><span style=\"background-color: rgb(102, 185, 102);\">hellow world!</span></p><p><br></p><p><br></p>",
       "status": "Inactive",
       "supplier": "general computer ",
       "date": "2021-05-04T18:00:00.000Z",

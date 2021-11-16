@@ -291,7 +291,8 @@
         <div>
           <div class="p-mt-6">
             <Fieldset legend="Product Description">
-            <pre class="product-description">{{product.productDescription}}</pre>
+              <div class="product-description" v-html="product.productDescription"></div>
+            
             </Fieldset>
           </div>
           <div class="p-mt-3">
