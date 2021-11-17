@@ -47,11 +47,10 @@
       
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col p-mt-5 p-mb-4">
-             <span class="p-float-label">
-              <Textarea id="textarea" v-model="productDescription" rows="3" :class="{'p-invalid':!productDescription && submitted}"/>
-              <label for="textarea">Product Description</label>
+             <Fieldset legend="Product Description">
+               <CustomizedEditor id="productDescription" v-model="productDescription" editorStyle="height: 320px" :class="{'p-invalid':!productDescription && submitted}"></CustomizedEditor>
               <small id="productDescription-help" class="p-error" v-if="!productDescription && submitted">product Description is required.</small>
-            </span>
+            </Fieldset>
             </div>
           </div>
 
@@ -135,9 +134,10 @@
 
 </template>
 <script>
+import CustomizedEditor from './CustomizedEditor.vue'
 
 export default {
-    components: {
+    components: { CustomizedEditor
 
     },
     emits: ["emitReload"],

@@ -34,7 +34,7 @@
         stateStorage="local"
         stateKey="dt-state-demo-local"
         v-model:selection="selectedProducts"
-        :globalFilterFields="['CurrentUser', 'supplier']"
+        :globalFilterFields="['CurrentUser', 'supplier','productDescription']"
       >
         <template #header>
           
@@ -291,7 +291,8 @@
         <div>
           <div class="p-mt-6">
             <Fieldset legend="Product Description">
-            <p class="product-description">{{product.productDescription}}</p>
+              <div class="product-description" v-html="product.productDescription"></div>
+            
             </Fieldset>
           </div>
           <div class="p-mt-3">
@@ -304,7 +305,7 @@
             formatDate(data.date)
           }}</template>
             </Column>
-            <Column field="Comment" header="Comment"></Column>
+            <Column field="comment" header="Comment"></Column>
         </DataTable>
         </Fieldset>
         </div>

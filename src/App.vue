@@ -222,7 +222,7 @@ window.addEventListener( 'resize', function() {
       color: var(--text-color);
    }
    canvas{
-     position: absolute;
+     position: fixed;
   left: 0px;
   top: 0px;
   z-index: -1;

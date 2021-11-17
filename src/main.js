@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 //createApp(App).use(store).use(router).mount('#app')
-
+import Editor from 'primevue/editor';
 import PrimeVue from 'primevue/config';
 
 import "../src/css/primeflex.css";
@@ -125,6 +125,7 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 
 app.component('Accordion', Accordion);
+app.component('Editor', Editor);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete);
 app.component('Avatar', Avatar);
