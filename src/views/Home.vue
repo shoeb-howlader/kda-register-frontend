@@ -34,7 +34,7 @@
         stateStorage="local"
         stateKey="dt-state-demo-local"
         v-model:selection="selectedProducts"
-        :globalFilterFields="['CurrentUser', 'supplier','productDescription']"
+        :globalFilterFields="['CurrentUser', 'supplier','productDescription','CurrentUserDesignation','CurrentUserDepartment']"
       >
         <template #header>
           
@@ -192,7 +192,7 @@
               optionValue="value"
               placeholder="Any"
               class="p-column-filter"
-              :showClear="true"
+             
             >
              <template #value="slotProps">
                 <div class="country-item country-item-value" v-for="option of slotProps.value" :key="option.code">
@@ -278,6 +278,14 @@
     <td class="text-left">Current user :</td>
     <td class="text-left">{{product.CurrentUser}}</td>
          </tr>
+         <tr class="active-row">
+    <td class="text-left">Current Designation :</td>
+    <td class="text-left">{{product.CurrentUserDesignation}}</td>
+         </tr>
+         <tr class="active-row">
+    <td class="text-left">Current Department :</td>
+    <td class="text-left">{{product.CurrentUserDepartment}}</td>
+         </tr>
           <tr>
     <td class="text-left">Purchase Date:</td>
     <td class="text-left">{{formatDate(product.date)}}</td>
@@ -300,6 +308,8 @@
         <DataTable :value="product.userDetails" responsiveLayout="scroll">
             
             <Column field="name" header="Name"></Column>
+            <Column field="designation" header="Designation"></Column>
+            <Column field="department" header="Department"></Column>
             <Column field="date" header="Date">
             <template #body="{ data }">{{
             formatDate(data.date)
@@ -329,6 +339,7 @@ export default {
   components: { InputForm, EditForm },
   data() {
     return {
+      api:process.env.VUE_APP_API,
       products: [],
       customers1: null,
       customers2: null,
@@ -384,6 +395,7 @@ export default {
     //this.initFilters1();
     this.productService = new ProductService();
     this.initFilters1();
+    console.log(process.env.VUE_APP_API)
   },
   mounted() {
     /*this.customerService.getCustomersLarge().then((data) => {
@@ -464,9 +476,7 @@ this.filteredRows=data.length
           operator: FilterOperator.AND,
           constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
         },
-        status: { value: null, matchMode: FilterMatchMode.EQUALS},
-        activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
-        verified: { value: null, matchMode: FilterMatchMode.EQUALS },
+        status: { value: null, matchMode: FilterMatchMode.IN},
       };
     },
      deleteSelectedProducts() {
@@ -481,7 +491,7 @@ this.filteredRows=data.length
             
             
             this.selectedProducts.forEach(element => {
-              fetch('http://localhost:3000/projects/'+element.id,{
+              fetch(this.api+'/'+element.id,{
                     method:'DELETE',}
                 )
                 .then(()=>{
@@ -539,7 +549,7 @@ this.InputDialog=!this.InputDialog
                 acceptClass: 'p-button-danger',
                 accept: () => {
 
-                    fetch('http://localhost:3000/projects/'+id,{
+                    fetch(this.api+'/'+id,{
                     method:'DELETE',
                 })
                 .then(()=>{
@@ -550,7 +560,7 @@ this.InputDialog=!this.InputDialog
                   this.$toast.add({severity:'success', summary:'Confirmed', detail:'Record deleted', life: 3000});
                 })
                 .catch(err=>{
-                  this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
+                  this.$toast.add({severity:'error', summary:'Error', detail:'Something went worng', life: 3000});
                   console.log(err)})
                     
                 },

@@ -67,6 +67,19 @@
               <label for="inputtext">User Name </label>
             </span>
           </div>
+
+        <div class="p-field p-col">
+            <span class="p-float-label">
+              <InputText id="inputtext" type="text" v-model="user.designation" />
+              <label for="inputtext">User Designation </label>
+            </span>
+          </div>
+          <div class="p-field p-col">
+            <span class="p-float-label">
+              <InputText id="inputtext" type="text" v-model="user.department" />
+              <label for="inputtext">User Department</label>
+            </span>
+          </div>
           <div class="p-field p-col">
             <div class="p-float-label">
               <Calendar id="date" v-model="user.date" :showIcon="true" dateFormat="dd.mm.yy" />
@@ -144,6 +157,7 @@ export default {
   props: ['product'],
     data() {
         return {
+          api:process.env.VUE_APP_API,
             isLoading:false,
             dummy: "",
             deleteProductDialog: false,
@@ -172,9 +186,11 @@ export default {
 
         addUser(index) {
             this.userDetails.splice(index + 1, 0, {
-                name: "",
-                date: "",
-                comment: "",
+                  name: "",
+                    designation:"",
+                    department:"",
+                    date: "",
+                    comment: "",
             });
             /*this.userDetails.push({
               name: "",
@@ -213,13 +229,15 @@ export default {
                 category: this.category,
                 CurrentUser: this.userDetails[0].name,
                 productDescription: this.productDescription,
+                CurrentUserDesignation:this.userDetails[0].designation,
+                CurrentUserDepartment: this.userDetails[0].department,
                 status: this.status,
                 supplier: this.supplier,
                 date: this.date,
                 userDetails: this.userDetails
             }
 
-            fetch('http://localhost:3000/projects/'+this.product.id, {
+            fetch(this.api+'/'+this.product.id, {
                 method: 'PATCH',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(product)

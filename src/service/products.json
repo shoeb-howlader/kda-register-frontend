@@ -365,7 +365,7 @@
     {
       "category": "computer",
       "CurrentUser": "nazmul Huda ",
-      "productDescription": "wnbenwbenbwe",
+      "productDescription": "<h1><br></h1><p><br></p><p><br></p><h1><span style=\"font-family: times-new-roman;\">﻿Computer Details </span></h1><p><br></p><p><strong>Processor</strong> : core i5</p><p><strong>Tander</strong> : RFQ</p>",
       "status": "Active",
       "supplier": "MA Computer ",
       "date": "2021-10-31T18:00:00.000Z",
@@ -373,15 +373,21 @@
         {
           "name": "nazmul Huda ",
           "date": "2021-11-28T18:00:00.000Z",
-          "comment": "kjjkhjkhj"
+          "comment": "kjjkhjkhj",
+          "designation": "Assistant Programmer ",
+          "department": "Computer Cell"
         },
         {
           "name": "shoeb howlader",
           "date": "2021-11-21T18:00:00.000Z",
-          "comment": "wekwjekwje"
+          "comment": "wekwjekwje",
+          "designation": "Assistant Programmer",
+          "department": "Computer Cell"
         }
       ],
-      "id": 1
+      "id": 1,
+      "CurrentUserDesignation": "Assistant Programmer ",
+      "CurrentUserDepartment": "Computer Cell"
     },
     {
       "category": "computer",
@@ -398,22 +404,6 @@
         }
       ],
       "id": 2
-    },
-    {
-      "category": "speaker",
-      "CurrentUser": "shoeb ",
-      "productDescription": "processor: core i5 \nmotherboard: Gigabyte \nSSD: 500GB",
-      "status": "Instock",
-      "supplier": "JIm ",
-      "date": "2021-11-16T18:00:00.000Z",
-      "userDetails": [
-        {
-          "name": "shoeb ",
-          "date": "2021-11-21T18:00:00.000Z",
-          "comment": "test comment"
-        }
-      ],
-      "id": 4
     },
     {
       "category": "UPS",
