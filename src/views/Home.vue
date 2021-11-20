@@ -26,7 +26,7 @@
         stripedRows
         showGridlines
         :rows="10"
-        data-key="id"
+        data-key="_id"
         v-model:filters="filters1"
         filterDisplay="menu"
         :loading="loading1"
@@ -491,12 +491,12 @@ this.filteredRows=data.length
             
             
             this.selectedProducts.forEach(element => {
-              fetch(this.api+'/'+element.id,{
+              fetch(this.api+'/'+element._id,{
                     method:'DELETE',}
                 )
                 .then(()=>{
                   this.products=this.products.filter((product)=>{
-                       return product.id!==element.id
+                       return product._id!==element._id
                           })
                 this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
                 })
@@ -540,8 +540,8 @@ this.InputDialog=!this.InputDialog
         },
         confirmDeleteProduct(product)
         {
-          console.log(product.id)
-           let id=product.id
+          console.log(product._id)
+           let _id=product._id
          this.$confirm.require({
                 message: 'Do you want to delete this record?',
                 header: 'Delete Confirmation',
@@ -549,13 +549,13 @@ this.InputDialog=!this.InputDialog
                 acceptClass: 'p-button-danger',
                 accept: () => {
 
-                    fetch(this.api+'/'+id,{
+                    fetch(this.api+'/'+_id,{
                     method:'DELETE',
                 })
                 .then(()=>{
                    
                      this.products=this.products.filter((product)=>{
-                       return product.id!==id
+                       return product._id!==_id
                           })
                   this.$toast.add({severity:'success', summary:'Confirmed', detail:'Record deleted', life: 3000});
                 })

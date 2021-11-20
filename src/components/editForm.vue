@@ -237,8 +237,8 @@ export default {
                 userDetails: this.userDetails
             }
 
-            fetch(this.api+'/'+this.product.id, {
-                method: 'PATCH',
+            fetch(this.api+'/'+this.product._id, {
+                method: 'PUT',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(product)
             })
