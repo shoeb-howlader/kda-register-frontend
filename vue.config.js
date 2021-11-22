@@ -1,6 +1,7 @@
 const path =require('path');
-outputDir:path.resolve(__dirname,'../public'),
+
 module.exports={
+    outputDir: path.resolve(__dirname, "../public"),
     devServer:{
         proxy:{
             '/api':{
