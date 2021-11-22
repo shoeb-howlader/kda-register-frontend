@@ -29,7 +29,7 @@
                <div class="p-fluid p-formgrid p-grid p-mt-3">
                    <div class="p-field p-col"> 
    <div class="p-float-label">
-              <Calendar id="date" v-model="date" :showIcon="true" required="true" dateFormat="dd.mm.yy" :class="{'p-invalid':!date && submitted}"/>
+              <Calendar id="date" v-model="date" :showIcon="true" required="true" dateFormat="dd.mm.yy" autocomplete="off" :class="{'p-invalid':!date && submitted}"/>
               <label for="date">Purchase Date</label>
               <small id="date-help" class="p-error" v-if="!date && submitted">Purchase date is required.</small>
             </div>

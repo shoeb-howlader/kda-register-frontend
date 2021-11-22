@@ -56,7 +56,7 @@ export default {
     name: 'Editor',
     data() {
         return {
-            fonts:['Arial', 'Courier', 'Garamond', 'Tahoma', 'Times New Roman', 'Verdana'],
+            fonts:['Arial', 'Courier', 'Garamond', 'Tahoma', 'Times New Roman', 'Verdana','Nikosh'],
             fontNames:null
 
         }
