@@ -157,7 +157,7 @@ export default {
   props: ['product'],
     data() {
         return {
-          api:process.env.VUE_APP_API,
+          api:process.env.VUE_APP_API_PRODUCT,
             isLoading:false,
             dummy: "",
             deleteProductDialog: false,

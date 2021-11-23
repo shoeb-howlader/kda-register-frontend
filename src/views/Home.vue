@@ -339,7 +339,7 @@ export default {
   components: { InputForm, EditForm },
   data() {
     return {
-      api:process.env.VUE_APP_API,
+      api:process.env.VUE_APP_API_PRODUCT,
       products: [],
       customers1: null,
       customers2: null,
@@ -359,28 +359,8 @@ export default {
         status: { value: null, matchMode: FilterMatchMode.EQUALS },
         verified: { value: null, matchMode: FilterMatchMode.EQUALS },
       },
-      representatives: [
-        { name: "Amy Elsner", image: "amyelsner.png" },
-        { name: "Anna Fali", image: "annafali.png" },
-        { name: "Asiya Javayant", image: "asiyajavayant.png" },
-        { name: "Bernardo Dominic", image: "bernardodominic.png" },
-        { name: "Elwin Sharvill", image: "elwinsharvill.png" },
-        { name: "Ioni Bowcher", image: "ionibowcher.png" },
-        { name: "Ivan Magalhaes", image: "ivanmagalhaes.png" },
-        { name: "Onyama Limba", image: "onyamalimba.png" },
-        { name: "Stephen Shaw", image: "stephenshaw.png" },
-        { name: "XuXue Feng", image: "xuxuefeng.png" },
-      ],
-      categories: [
-        
-        { name: "Computer", value: "computer" },
-        { name: "UPS", value: "UPS" },
-        { name: "Speaker", value: "speaker" },
-        { name: "Camera", value: "camera" },
-        { name: "Extension Board", value: "Extension Board" },
-        { name: "Ink", value: "Ink" },
-
-      ],
+    
+      categories: [],
       statuses: [
         { name: "Active", value: "Active" },
         { name: "Inactive", value: "Inactive" },
@@ -395,30 +375,21 @@ export default {
     //this.initFilters1();
     this.productService = new ProductService();
     this.initFilters1();
-    console.log(process.env.VUE_APP_API)
+    console.log(process.env.VUE_APP_API_PRODUCT)
   },
   mounted() {
-    /*this.customerService.getCustomersLarge().then((data) => {
-          this.customers1 = data;
-          this.loading1 = false;
-          this.customers1.forEach(
-            (customer) => (customer.date = new Date(customer.date))
-          );
-        });
-    
-        this.customerService.getCustomersLarge().then((data) => {
-          this.customers2 = data;
-          this.loading2 = false;
-          this.customers2.forEach(
-            (customer) => (customer.date = new Date(customer.date))
-          );
-        });*/
+  
 
     this.productService.getProducts().then((data) => {
       this.products = data;
       this.loading1 = false;
     });
-    console.log(this.products);
+
+    this.productService.getCategories().then((data) => {
+      this.categories = data;
+     // console.log(data);
+    });
+ 
   },
   methods: {
     countRows(data)
@@ -441,12 +412,6 @@ this.filteredRows=data.length
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      });
-    },
-    formatCurrency(value) {
-      return value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
       });
     },
     clearFilter1() {
@@ -504,17 +469,6 @@ this.filteredRows=data.length
                   this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
                   console.log(err)})
             });
-
-                    /*fetch('http://localhost:3000/projects/'+id,{
-                    method:'DELETE',}
-                )
-                .then(()=>{
-                   
-
-                })
-                .catch(err=>{
-                  this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
-                  console.log(err)})*/
                     
                 },
                 reject: () => {

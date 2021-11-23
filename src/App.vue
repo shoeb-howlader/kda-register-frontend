@@ -186,8 +186,7 @@ window.addEventListener( 'resize', function() {
                 {label: 'Home', icon: 'pi pi-fw pi-home', to: '/'},
                 {label: 'About', icon: 'pi pi-fw pi-calendar', to: '/about'},
                 {label: 'Report', icon: 'pi pi-fw pi-pencil', to: '/report'},
-                {label: 'Documentation', icon: 'pi pi-fw pi-file', to: '/tabmenu/documentation'},
-                {label: 'Settings', icon: 'pi pi-fw pi-cog', to: '/tabmenu/settings'}
+                {label: 'Settings', icon: 'pi pi-fw pi-cog', to: '/settings'}
             ]
     }
   },

@@ -7,8 +7,8 @@ export default class ProductService {
 	async getProducts() {
 		//return fetch('./products.json').then(res => res.json()).then(d => d.data);
 
-    let api=process.env.VUE_APP_API
-        let response = await fetch(api);
+    
+        let response = await fetch('/api/products');
         let data = await response.json();
         //data=data.data;
         //console.log(data);
@@ -19,7 +19,12 @@ export default class ProductService {
         return data;
     }
 
-    getProductsWithOrdersSmall() {
-		return fetch('products-orders-small.json').then(res => res.json()).then(d => d.data);
-	}
+    async getCategories(){
+      
+      
+      let response = await fetch('/api/categories');
+      let data = await response.json();
+      return data;
+
+    }
 }
