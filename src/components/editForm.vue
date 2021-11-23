@@ -148,7 +148,7 @@
 </template>
 <script>
 import CustomizedEditor from './CustomizedEditor.vue'
-
+import ProductService from "../service/ProductService";
 export default {
     components: { CustomizedEditor
 
@@ -181,6 +181,16 @@ export default {
             selectedCity: null,
             statusOptions: ['Active', 'Instock', 'Inactive']
         };
+    },
+    created() {
+    this.productService = new ProductService();
+  },
+    mounted() {
+
+      this.productService.getCategories().then((data) => {
+      this.categories = data;
+      //console.log(this.categories);
+    });
     },
     methods: {
 

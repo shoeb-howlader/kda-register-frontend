@@ -144,7 +144,7 @@
 </template>
 <script>
 import CustomizedEditor from './CustomizedEditor.vue'
-
+import ProductService from "../service/ProductService";
 export default {
     components: { CustomizedEditor
 
@@ -171,19 +171,20 @@ export default {
                     comment: "",
                 },
             ],
-            categories: [
-
-                { name: "Computer", value: "computer" },
-                { name: "UPS", value: "UPS" },
-                { name: "Speaker", value: "speaker" },
-                { name: "Camera", value: "camera" },
-                { name: "Extension Board", value: "Extension Board" },
-                { name: "Ink", value: "Ink" },
-
-            ],
+            categories: [],
             selectedCity: null,
             statusOptions: ['Active', 'Instock', 'Inactive']
         };
+    },
+    created() {
+    this.productService = new ProductService();
+  },
+    mounted() {
+
+      this.productService.getCategories().then((data) => {
+      this.categories = data;
+      //console.log(this.categories);
+    });
     },
     methods: {
 

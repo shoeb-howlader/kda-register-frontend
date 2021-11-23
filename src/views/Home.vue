@@ -332,7 +332,6 @@
 <script>
 import EditForm from '../components/editForm.vue'
 import InputForm from '../components/InputForm.vue'
-import CustomerService from "../service/CustomerService";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import ProductService from "../service/ProductService";
 export default {
@@ -351,14 +350,7 @@ export default {
       product:null,
       editingProduct:null,
       filteredRows:null,
-      filters2: {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        "country.name": { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        representative: { value: null, matchMode: FilterMatchMode.IN },
-        status: { value: null, matchMode: FilterMatchMode.EQUALS },
-        verified: { value: null, matchMode: FilterMatchMode.EQUALS },
-      },
+      
     
       categories: [],
       statuses: [
@@ -371,15 +363,11 @@ export default {
     };
   },
   created() {
-    this.customerService = new CustomerService();
-    //this.initFilters1();
     this.productService = new ProductService();
     this.initFilters1();
-    console.log(process.env.VUE_APP_API_PRODUCT)
+    //console.log(process.env.VUE_APP_API_PRODUCT)
   },
   mounted() {
-  
-
     this.productService.getProducts().then((data) => {
       this.products = data;
       this.loading1 = false;
@@ -387,7 +375,7 @@ export default {
 
     this.productService.getCategories().then((data) => {
       this.categories = data;
-     // console.log(data);
+      //console.log(this.categories);
     });
  
   },
