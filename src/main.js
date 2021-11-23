@@ -8,7 +8,7 @@ import Editor from 'primevue/editor';
 import PrimeVue from 'primevue/config';
 
 import "../src/css/primeflex.css";
-import "../src/css/themes/saga-blue/theme.css";
+//import "../src/css/themes/saga-blue/theme.css";
 import "../src/css/primevue.min.css";
 import "../src/css/primeicons/primeicons.css";
 import "./index.css";

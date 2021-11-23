@@ -5,7 +5,7 @@
        <Fieldset legend="Edit Categories" :toggleable="true">
       
         <div class="p-grid p-jc-center">
-            <div class="p-col-4">
+            <div class="p-col-5">
                 <div class="box">
                     
         <DataTable :value="categories" responsiveLayout="scroll">
@@ -22,14 +22,16 @@
         <label for="lastname" class="p-sr-only">Value</label>
         <InputText id="lastname" type="text" placeholder="Value" v-model="value"/>
          </div>
+         <div class="p-field">
          <Button
             label=""
             icon="pi pi-plus"
             iconPos="right"
             class="p-button-raised p-button-rounded p-mr-2  p-button-success"
             v-tooltip="'Add new category'"
-            @click="addCategory(index)"
+            @click="addCategory()"
           />
+          </div>
     </div>
 
     
@@ -39,7 +41,20 @@
             </div>
 
           </div>
-          </Fieldset>   
+          </Fieldset> 
+          
+          <Fieldset legend="Themes" :toggleable="true" class="p-mt-4">
+            <p>Current theme: {{theme}}</p>
+            <div>
+	       <Button label="Saga green" @click="changeTheme('saga-green')"/>
+         <Button label="Arya purple" @click="changeTheme('arya-purple')"/>  
+        <Button label="tailwind-light" @click="changeTheme('tailwind-light')"/>
+         <Button label="luna-green" @click="changeTheme('luna-green')"/> 
+ 
+        </div>
+</Fieldset>
+
+    
     </template>
      </card> 
     </div>
@@ -52,7 +67,8 @@ export default {
        api:process.env.VUE_APP_API_CATEGORY,
       categories: [],
       name:'',
-      value:''
+      value:'',
+      theme:"saga-blue"
     };
   },
   created() {
@@ -94,9 +110,62 @@ export default {
                 )
           
           
+      },
+       changeTheme(theme) {
+         console.log('theme changed')
+      let themeElement = document.getElementById("theme-link");
+      themeElement.setAttribute(
+        "href",
+        themeElement.getAttribute("href").replace(this.theme, theme)
+      );
+      this.theme = theme;
+      //this.activeMenuIndex = null;
+      //EventBus.emit("change-theme", event);
+      //this.$appState.darkTheme = event.dark;
+      if (theme.startsWith("md")) {
+        this.$primevue.config.ripple = true;
       }
+      localStorage.setItem("theme", this.theme);
+    }
   },
 };
 </script>
-<style lang="">
+<style lang="scss" scoped>
+.p-button {
+    margin-right: .5rem;
+}
+
+.p-buttonset {
+    .p-button {
+        margin-right: 0;
+    }
+}
+
+.sizes {
+    .button {
+        margin-bottom: .5rem;
+        display: block;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .p-button {
+        margin-bottom: .5rem;
+
+        &:not(.p-button-icon-only) {
+            display: flex;
+            width: 100%;
+        }
+    }
+
+    .p-buttonset {
+        .p-button {
+            margin-bottom: 0;
+        }
+    }
+}
 </style>
