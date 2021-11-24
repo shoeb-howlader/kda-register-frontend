@@ -18,12 +18,12 @@
         ref="dt"
         :paginator="true"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        :rowsPerPageOptions="[10,20,50]"
+        :rowsPerPageOptions="[10,20,50,100,200,500,1000]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
         class="p-datatable-customers"
         :resizableColumns="true" columnResizeMode="fit"
         
-        stripedRows
+        
         showGridlines
         :rows="10"
         data-key="_id"

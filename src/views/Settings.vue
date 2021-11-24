@@ -45,11 +45,8 @@
           
           <Fieldset legend="Themes" :toggleable="true" class="p-mt-4">
             <p>Current theme: {{theme}}</p>
-            <div>
-	       <Button label="Saga green" @click="changeTheme('saga-green')"/>
-         <Button label="Arya purple" @click="changeTheme('arya-purple')"/>  
-        <Button label="tailwind-light" @click="changeTheme('tailwind-light')"/>
-         <Button label="luna-green" @click="changeTheme('luna-green')"/> 
+            <div >
+	       <Button :label="item" v-for="item in themes" :key="item" @click="changeTheme(item)"/>
  
         </div>
 </Fieldset>
@@ -68,7 +65,13 @@ export default {
       categories: [],
       name:'',
       value:'',
-      theme:"saga-blue"
+      theme:"saga-blue",
+      themes:['bootstrap4-light-blue','bootstrap4-light-purple','bootstrap4-dark-blue','bootstrap4-dark-purple','md-light-indigo','md-light-deeppurple',
+      
+               'md-dark-indigo','md-dark-deeppurple','mdc-light-indigo','mdc-light-deeppurple','mdc-dark-indigo','mdc-dark-deeppurple','tailwind-light',
+               'fluent-light','saga-blue','saga-green','saga-orange','saga-purple','vela-blue','vela-green','vela-orange','vela-purple','arya-blue',
+               'arya-green','arya-orange','arya-purple','nova','nova-alt','nova-accent','nova-vue','luna-amber','luna-blue','luna-green','luna-pink','rhea'
+               ]
     };
   },
   created() {
@@ -133,6 +136,7 @@ export default {
 <style lang="scss" scoped>
 .p-button {
     margin-right: .5rem;
+    margin-top:10px;
 }
 
 .p-buttonset {
