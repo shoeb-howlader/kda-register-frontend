@@ -41,7 +41,7 @@
           <div class="p-d-flex p-jc-between">
             <h5 class="p-mb-2 p-m-md-0 p-as-md-center">Manage Products</h5>
             <div>
-              <h5 class="p-mb-2 p-m-md-0 p-as-md-center"><Badge :value="filteredRows"  size="xlarge" severity="success" class="p-mr-2"></Badge> </h5>
+              <h5 class="p-mb-2 p-m-md-0 p-as-md-center"><Badge :value="filteredRows"  size="xlarge"  class="p-mr-2"></Badge> </h5>
             </div>
             <div> <Button
               type="button"
@@ -217,17 +217,17 @@
           <template #body="slotProps">
             <Button
               icon="pi pi-eye"
-              class="p-button-rounded p-button-warning p-mr-2"
+              class="p-button-rounded p-button-warning p-mr-2 p-button-raised"
               @click="viewProduct(slotProps.data)"
             />
             <Button
               icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
+              class="p-button-rounded p-button-success p-mr-2 p-button-raised"
               @click="editProduct(slotProps.data)"
             />
             <Button
               icon="pi pi-trash"
-              class="p-button-rounded p-button-danger"
+              class="p-button-rounded p-button-danger p-button-raised"
               @click="confirmDeleteProduct(slotProps.data)"
             />
             

@@ -2,10 +2,18 @@
 <canvas id="c"></canvas>
   <div class="p-grid p-jc-center">
 <div class="p-col-12 p-md-12 p-sm-12 p-lg-8" >
-<TabMenu :model="items"  class="p-mx-auto"/>
+<TabMenu :model="items"  />
   </div>
   </div>
   <router-view/>
+
+  <footer id="tsparticles">
+    <div class="horizontal-scroll2"><div class="horizontal-scroll">
+</div></div>
+<div>
+  <p class="footer-text">Designed and developed by<br> <span class="myname"> Shoeb Howlader</span></p>
+</div>
+  </footer>
 </template>
 
 
@@ -198,6 +206,11 @@ window.addEventListener( 'resize', function() {
   },
 
 }
+
+
+//////////ts 🙌 
+
+
 </script>
 <style lang="scss">
 #app {
@@ -225,11 +238,69 @@ window.addEventListener( 'resize', function() {
       font-family: var(--font-family);
       font-weight: 400;
       color: var(--text-color);
+
+      
    }
    canvas{
      position: fixed;
   left: 0px;
   top: 0px;
-  z-index: -1;
+  z-index: -100;
    }
+
+   /** */
+.horizontal-scroll {
+width: 100%;
+height: 300px;
+background: url('http://mckenziedave.co.uk/1st-touch/footer_fr.png');
+-webkit-animation: backgroundScroll 400s linear infinite;
+animation: backgroundScroll 60s linear infinite;
+background-repeat: no-repeat;
+}
+
+@-webkit-keyframes backgroundScroll {
+from {background-position: 0 0;}
+to {background-position: -600px 0;}
+}
+        
+@keyframes backgroundScroll {
+from {background-position: 0 0;}
+to {background-position: -2000px 0;}
+}
+
+.horizontal-scroll2 {
+width: 100%;
+height: 200px;
+background: url('http://mckenziedave.co.uk/1st-touch/footer_bg.png');
+-webkit-animation: backgroundScroll2 400s linear infinite;
+animation: backgroundScroll2 30s linear infinite;
+background-repeat: no-repeat;
+}
+
+@-webkit-keyframes backgroundScroll2 {
+from {background-position: -1000px 0;}
+to {background-position: 0 0;}
+}
+        
+@keyframes backgroundScroll2 {
+from {background-position: -2000px 0;}
+to {background-position: 0 0;}
+}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Mono:wght@100;200&display=swap');
+.footer-text{
+  font-family: 'Roboto Mono';
+  font-size: large;
+}
+.myname{
+  font-family: 'Lobster';
+  font-size: larger;
+}
+
+footer{
+  position: relative; 
+                bottom: 0; 
+                width: 100%; 
+                height: 10px; 
+          
+}
 </style>

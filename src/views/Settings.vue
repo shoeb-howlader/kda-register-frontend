@@ -1,4 +1,5 @@
 <template lang="">
+<Toast />
     <div>
        <card>
           <template #content>
@@ -8,26 +9,32 @@
             <div class="p-col-5">
                 <div class="box">
                     
-        <DataTable :value="categories" responsiveLayout="scroll">
+        <DataTable :value="categories" showGridlines responsiveLayout="scroll">
             <Column field="name" header="Name"></Column>
             <Column field="value" header="Value"></Column>
         </DataTable>
 
-    <div class="p-formgroup-inline p-mt-3">
+    <div class="p-formgroup-inline p-mt-5">
        <div class="p-field">
-        <label for="firstname" class="p-sr-only">Name</label>
-        <InputText id="firstname" type="text" placeholder="Name" v-model="name"/>
+       <span class="p-float-label">
+              <InputText id="name" type="text" v-model="name" required="true"  :class="{'p-invalid':!name && submitted}" />
+              <label for="name">Name </label>
+              
+            </span>
         </div>
-        <div class="p-field">
-        <label for="lastname" class="p-sr-only">Value</label>
-        <InputText id="lastname" type="text" placeholder="Value" v-model="value"/>
+        <div class="p-field ">
+        <span class="p-float-label">
+              <InputText id="value" type="text" v-model="value" required="true"  :class="{'p-invalid':!value && submitted}" />
+              <label for="value">Value </label>
+              
+            </span>
          </div>
          <div class="p-field">
          <Button
             label=""
             icon="pi pi-plus"
             iconPos="right"
-            class="p-button-raised p-button-rounded p-mr-2  p-button-success"
+            class="p-button-raised p-button-rounded  btn"
             v-tooltip="'Add new category'"
             @click="addCategory()"
           />
@@ -65,12 +72,13 @@ export default {
       categories: [],
       name:'',
       value:'',
-      theme:"saga-blue",
-      themes:['bootstrap4-light-blue','bootstrap4-light-purple','bootstrap4-dark-blue','bootstrap4-dark-purple','md-light-indigo','md-light-deeppurple',
+      theme:localStorage.getItem('theme'),
+      submitted:false,
+      themes:['md-light-indigo','md-light-deeppurple',
       
                'md-dark-indigo','md-dark-deeppurple','mdc-light-indigo','mdc-light-deeppurple','mdc-dark-indigo','mdc-dark-deeppurple','tailwind-light',
-               'fluent-light','saga-blue','saga-green','saga-orange','saga-purple','vela-blue','vela-green','vela-orange','vela-purple','arya-blue',
-               'arya-green','arya-orange','arya-purple','nova','nova-alt','nova-accent','nova-vue','luna-amber','luna-blue','luna-green','luna-pink','rhea'
+               'fluent-light','saga-blue','saga-green','saga-orange','saga-purple',
+               'nova','nova-accent','nova-vue'
                ]
     };
   },
@@ -86,6 +94,11 @@ export default {
   },
   methods: {
       addCategory() {
+        this.submitted=true;
+        if(!this.name||!this.value){
+        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
+        return }
+        else{
           let category={
               name:this.name,
               value:this.value
@@ -103,7 +116,7 @@ export default {
                     this.categories.push(category);
                     this.name="",
                     this.value=""
-
+                    this.submitted=false;
                 })
                 .catch(err => {
                     this.isLoading=false
@@ -113,7 +126,7 @@ export default {
                 )
           
           
-      },
+      }},
        changeTheme(theme) {
          console.log('theme changed')
       let themeElement = document.getElementById("theme-link");
@@ -171,5 +184,8 @@ export default {
             margin-bottom: 0;
         }
     }
+}
+.btn{
+  margin-top:0px;
 }
 </style>
