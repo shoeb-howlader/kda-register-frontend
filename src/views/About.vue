@@ -92,10 +92,9 @@ typewriter2.changeDeleteSpeed(75)
 }}
 
 /**
-  `<p>is a web-based software built with MEVN (MongoDB,Express,Vue,Node) stack to make Computer Sectcion's Register maintainance easy.
-It has global search field(covers Current user name, Current user department, Current user designation, product description,
-) and idividual search field to find any product within few seconds.
-Individual sorting for each field.All search query stored in local storage so that search filed remains 
+  `<p>is a web-based software built with MEVN (MongoDB,Express,Vue,Node) stack to maintain Computer Sectcion's Register easily.
+It has global search field(covers Current user name, Current user department, Current user designation, product description
+) and idividual search field to find any product within few seconds.It laso have Individual sorting for each field.All search query stored in local storage so that search filed remains 
 same after hard reload.Multiple Delete option is for deleting many data at a time. Product Description field 
 contains a rich text editor to insert product description efficiently. 
 An Export machanism added to export the data easily to Windows Excel.About 17 themes added to Customize

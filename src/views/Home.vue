@@ -4,7 +4,7 @@
       <Toolbar class="p-mb-4">
                 <template #start>
                     <Button label="New" icon="pi pi-plus" class="p-button-success p-mr-2" @click="openNew" />
-                    <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="deleteSelectedProducts" :disabled="!selectedProducts || !selectedProducts.length" />
+                    <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="deleteSelectedDialog=true" :disabled="!selectedProducts || !selectedProducts.length" />
                 </template>
 
                 <template #end>
@@ -325,6 +325,29 @@
         </Dialog>
 
     <ConfirmDialog></ConfirmDialog>
+
+      <Dialog header="Confirmation" v-model:visible="deleteSelectedDialog" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+                <span>Are you sure you want to proceed?</span>
+
+                <p style="margin:5px">please type here <span style="color:red">delete selected</span></p>
+                
+                 <span class="p-input-icon-right">
+            <i style="color:red; fontSize: 1rem; font-weight: bold;" class="pi pi-spin pi-spinner" v-if="dUserText!='delete selected'"/>
+            <i style="color:green; fontSize: 1rem; font-weight: bold;" class="pi  pi pi-check" v-else/>
+            
+            <InputText type="text" v-model="dUserText" :class="{'p-invalid':dUserText!='delete selected'}"/>
+        </span>
+                <p style="color:red; font-family:'Roboto';fontSize: 1rem; margin:3px;" v-if="dUserText!='delete selected'">not matched </p>
+                <p style="color:green;font-family:'Roboto';fontSize: 1rem;margin:3px; " v-else >matched </p>
+                
+            </div>
+            <template #footer>
+                <Button label="No" icon="pi pi-times" @click="deleteSelectedDialog=false" class="p-button-success"/>
+                <Button label="Yes" icon="pi pi-check" @click="deleteSelectedProducts" class="p-button-danger" :disabled="dUserText!='delete selected'" autofocus  />
+            </template>
+        </Dialog>
     <Toast />
   </div>
 </template>
@@ -347,10 +370,11 @@ export default {
       InputDialog:false,
       viewDialog:false,
       editDialog:false,
+      deleteSelectedDialog:false,
       product:null,
       editingProduct:null,
       filteredRows:null,
-      
+      dUserText:null,
     
       categories: [],
       statuses: [
@@ -434,16 +458,7 @@ this.filteredRows=data.length
     },
      deleteSelectedProducts() {
        console.log(this.selectedProducts)
-           
-         this.$confirm.require({
-                message: 'Do you want to delete this record?',
-                header: 'Delete Confirmation',
-                icon: 'pi pi-info-circle',
-                acceptClass: 'p-button-danger',
-                accept: () => {
-            
-            
-            this.selectedProducts.forEach(element => {
+       this.selectedProducts.forEach(element => {
               fetch(this.api+'/'+element._id,{
                     method:'DELETE',}
                 )
@@ -457,12 +472,21 @@ this.filteredRows=data.length
                   this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
                   console.log(err)})
             });
+           this.deleteSelectedDialog=false;
+         /*this.$confirm.require({
+                message: 'Do you want to delete this record?',
+                header: 'Delete Confirmation',
+                icon: 'pi pi-info-circle',
+                acceptClass: 'p-button-danger',
+                accept: () => {
+            
                     
                 },
                 reject: () => {
                     this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
                 }
-            });
+            });*/
+
 
         },
         viewProduct(product)
