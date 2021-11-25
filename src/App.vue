@@ -198,9 +198,9 @@ window.addEventListener( 'resize', function() {
     return {
       items: [
                 {label: 'Home', icon: 'pi pi-fw pi-home', to: '/'},
-                {label: 'About', icon: 'pi pi-fw pi-calendar', to: '/about'},
-                {label: 'Report', icon: 'pi pi-fw pi-pencil', to: '/report'},
-                {label: 'Settings', icon: 'pi pi-fw pi-cog', to: '/settings'}
+                {label: 'Settings', icon: 'pi pi-fw pi-cog', to: '/settings'},
+                {label: 'About', icon: 'pi pi-fw pi-calendar', to: '/about'}
+                
             ]
     }
   },
