@@ -27,4 +27,22 @@ export default class ProductService {
       return data;
 
     }
+
+    async getDepartments(){
+      
+      
+      let response = await fetch('/api/departments');
+      let data = await response.json();
+      return data;
+
+    }
+
+    async getDesignations(){
+      
+      
+      let response = await fetch('/api/designations');
+      let data = await response.json();
+      return data;
+
+    }
 }

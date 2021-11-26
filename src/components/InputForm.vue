@@ -67,13 +67,15 @@
           </div>
            <div class="p-field p-col">
             <span class="p-float-label">
-              <InputText id="inputtext" type="text" v-model="user.designation" />
+              <!--InputText id="inputtext" type="text" v-model="user.designation" /-->
+              <Dropdown v-model="user.designation" :options="designations"  optionLabel="name" optionValue="value"   />
               <label for="inputtext">User Designation </label>
             </span>
           </div>
           <div class="p-field p-col">
             <span class="p-float-label">
-              <InputText id="inputtext" type="text" v-model="user.department" />
+              <!--InputText id="inputtext" type="text" v-model="user.department" /-->
+               <Dropdown v-model="user.department" :options="departments"  optionLabel="name" optionValue="value"   />
               <label for="inputtext">User Department</label>
             </span>
           </div>
@@ -132,13 +134,7 @@
             </template>
         </Card>
 
-<Dialog v-model:visible="deleteProductDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
-            
-            <template #footer>
-                <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
-            </template>
-        </Dialog>
+
    
 
 </template>
@@ -172,6 +168,8 @@ export default {
                 },
             ],
             categories: [],
+            designations:[],
+            departments:[],
             selectedCity: null,
             statusOptions: ['Active', 'Instock', 'Inactive']
         };
@@ -183,8 +181,18 @@ export default {
 
       this.productService.getCategories().then((data) => {
       this.categories = data;
-      //console.log(this.categories);
     });
+
+this.productService.getDepartments().then((data) => {
+      this.departments = data;
+    });
+
+this.productService.getDesignations().then((data) => {
+      this.designations = data;
+    });
+
+
+
     },
     methods: {
 

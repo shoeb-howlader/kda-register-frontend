@@ -10,25 +10,19 @@
                 <div class="box">
                     
         <DataTable :value="categories" showGridlines responsiveLayout="scroll">
-            <Column field="name" header="Name"></Column>
-            <Column field="value" header="Value"></Column>
+            <Column field="name" header="Categories"></Column>
+            
         </DataTable>
 
-    <div class="p-formgroup-inline p-mt-5">
-       <div class="p-field">
+    <div class="p-fluid p-formgrid p-grid p-mt-5">
+       <div class="p-field p-col">
        <span class="p-float-label">
-              <InputText id="name" type="text" v-model="name" required="true"  :class="{'p-invalid':!name && submitted}" />
-              <label for="name">Name </label>
+              <InputText id="CategoryName" type="text" v-model="CategoryName" required="true"  :class="{'p-invalid':!CategoryName && categorySubmitted}" />
+              <label for="CategoryName">Add new category</label>
               
             </span>
         </div>
-        <div class="p-field ">
-        <span class="p-float-label">
-              <InputText id="value" type="text" v-model="value" required="true"  :class="{'p-invalid':!value && submitted}" />
-              <label for="value">Value </label>
-              
-            </span>
-         </div>
+        
          <div class="p-field">
          <Button
             label=""
@@ -41,8 +35,80 @@
           </div>
     </div>
 
-    
+    </div>
+            </div>
 
+          </div>
+          </Fieldset> 
+           
+           <Fieldset legend="Edit Designations" :toggleable="true">
+      
+        <div class="p-grid p-jc-center">
+            <div class="p-col-5">
+                <div class="box">
+                    
+        <DataTable :value="designations" showGridlines responsiveLayout="scroll">
+            <Column field="name" header="Designations"></Column>
+            
+        </DataTable>
+
+    <div class="p-fluid p-formgrid p-grid p-mt-5">
+       <div class="p-field p-col">
+       <span class="p-float-label">
+              <InputText id="designationName" type="text" v-model="designationName" required="true"  :class="{'p-invalid':!designationName && designationSubmitted}" />
+              <label for="designationName">Add new designation</label>
+              
+            </span>
+        </div>
+        
+         <div class="p-field">
+         <Button
+            label=""
+            icon="pi pi-plus"
+            iconPos="right"
+            class="p-button-raised p-button-rounded  btn"
+            v-tooltip="'Add new designation'"
+            @click="addDesignation()"
+          />
+          </div>
+    </div>
+
+    </div>
+            </div>
+
+          </div>
+          </Fieldset> 
+                <Fieldset legend="Edit Departments" :toggleable="true">
+      
+        <div class="p-grid p-jc-center">
+            <div class="p-col-5">
+                <div class="box">
+                    
+        <DataTable :value="deparments" showGridlines responsiveLayout="scroll">
+            <Column field="name" header="Departments"></Column>
+            
+        </DataTable>
+
+    <div class="p-fluid p-formgrid p-grid p-mt-5">
+       <div class="p-field p-col">
+       <span class="p-float-label">
+              <InputText id="departmentName" type="text" v-model="departmentName" required="true"  :class="{'p-invalid':!departmentName && departmentSubmitted}" />
+              <label for="departmentName">Add new department</label>
+              
+            </span>
+        </div>
+        
+         <div class="p-field">
+         <Button
+            label=""
+            icon="pi pi-plus"
+            iconPos="right"
+            class="p-button-raised p-button-rounded  btn"
+            v-tooltip="'Add new department'"
+            @click="addDepartment()"
+          />
+          </div>
+    </div>
 
     </div>
             </div>
@@ -68,12 +134,16 @@ import ProductService from "../service/ProductService";
 export default {
   data() {
     return {
-       api:process.env.VUE_APP_API_CATEGORY,
       categories: [],
-      name:'',
-      value:'',
+      deparments:[],
+      designations:[],
+      CategoryName:'',
+      departmentName:'',
+      designationName:'',
       theme:localStorage.getItem('theme'),
-      submitted:false,
+      categorySubmitted:false,
+      departmentSubmitted:false,
+      designationSubmitted:false,
       themes:['md-light-indigo','md-light-deeppurple',
       
                'md-dark-indigo','md-dark-deeppurple','mdc-light-indigo','mdc-light-deeppurple','mdc-dark-indigo','mdc-dark-deeppurple','tailwind-light',
@@ -88,23 +158,30 @@ export default {
   mounted() {
     this.productService.getCategories().then((data) => {
       this.categories = data;
-      /*console.log(this.categories);*/
-
     });
+
+this.productService.getDepartments().then((data) => {
+      this.deparments = data;
+    });
+
+    this.productService.getDesignations().then((data) => {
+      this.designations = data;
+    });
+
   },
   methods: {
       addCategory() {
-        this.submitted=true;
-        if(!this.name||!this.value){
+        this.categorySubmitted=true;
+        if(!this.CategoryName){
         this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
         return }
         else{
           let category={
-              name:this.name,
-              value:this.value
+              name:this.CategoryName,
+              value:this.CategoryName
           }
 
-            fetch(this.api, {
+            fetch(process.env.VUE_APP_API_CATEGORY, {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(category)
@@ -114,9 +191,74 @@ export default {
                     this.isLoading=false
                     this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
                     this.categories.push(category);
-                    this.name="",
-                    this.value=""
-                    this.submitted=false;
+                    this.CategoryName="",
+                    this.categorySubmitted=false;
+                })
+                .catch(err => {
+                    this.isLoading=false
+                    console.log(err)
+                    this.$toast.add({ severity: 'error', summary: 'ERROR: Category not inserted ' ,life: 3000});
+                }
+                )
+          
+          
+      }},
+        addDesignation() {
+        this.designationSubmitted=true;
+        if(!this.designationName){
+        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
+        return }
+        else{
+          let designation={
+              name:this.designationName,
+              value:this.designationName
+          }
+
+            fetch(process.env.VUE_APP_API_DESIGNATION, {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(designation)
+            })
+                .then(() => {
+                    //this.$router.push('/')
+                    this.isLoading=false
+                    this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
+                    this.designations.push(designation);
+                    this.designationName="",
+                    this.designationSubmitted=false;
+                })
+                .catch(err => {
+                    this.isLoading=false
+                    console.log(err)
+                    this.$toast.add({ severity: 'error', summary: 'ERROR: Category not inserted ' ,life: 3000});
+                }
+                )
+          
+          
+      }},
+  addDepartment() {
+        this.departmentSubmitted=true;
+        if(!this.departmentName){
+        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
+        return }
+        else{
+          let department={
+              name:this.departmentName,
+              value:this.departmentName
+          }
+
+            fetch(process.env.VUE_APP_API_DEPARTMENT, {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(department)
+            })
+                .then(() => {
+                    //this.$router.push('/')
+                    this.isLoading=false
+                    this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
+                    this.deparments.push(department);
+                    this.departmentName="",
+                    this.departmentSubmitted=false;
                 })
                 .catch(err => {
                     this.isLoading=false

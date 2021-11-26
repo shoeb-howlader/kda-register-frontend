@@ -82,6 +82,38 @@
             />
           </template>
         </Column>
+
+        <Column
+        field="CurrentUserDepartment"
+          header="User Department"
+          filterField="CurrentUserDepartment"
+          :sortable="true"
+          :showFilterMatchModes="false"
+          :filterMenuStyle="{ width: '14rem' }"
+          style="min-width: 14rem"
+        >
+          <template #body="{ data }">
+            <span class="image-text">{{ data.CurrentUserDepartment }}</span>
+          </template>
+          <template #filter="{ filterModel }">
+            <div class="p-mb-3 p-text-bold">Select Department</div>
+            <MultiSelect
+              v-model="filterModel.value"
+              :options="departments"
+              optionLabel="name"
+              optionValue="value"
+              placeholder="Any"
+              class="p-column-filter"
+            >
+              <template #option="slotProps">
+                <div class="p-multiselect-representative-option">
+                  <span class="image-text">{{ slotProps.option.name }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </template>
+        </Column>
+
         <Column
           field="supplier"
           header="Supplier"
@@ -233,10 +265,10 @@
             
           </template>
         </Column>
-        <template #paginatorLeft>
+        <template #paginatorstart>
                 <Button type="button" icon="pi pi-refresh" class="p-button-text" @click="reload" />
             </template>
-            <template #paginatorRight>
+            <template #paginatorend>
                 <Button type="button" icon="pi pi-cloud" class="p-button-text" />
             </template>
             <template #footer>
@@ -375,7 +407,7 @@ export default {
       editingProduct:null,
       filteredRows:null,
       dUserText:null,
-    
+      departments:[],
       categories: [],
       statuses: [
         { name: "Active", value: "Active" },
@@ -402,6 +434,9 @@ export default {
       //console.log(this.categories);
     });
  
+ this.productService.getDepartments().then((data) => {
+      this.departments = data;
+    });
   },
   methods: {
     countRows(data)
@@ -438,6 +473,7 @@ this.filteredRows=data.length
             { value: null, matchMode: FilterMatchMode.STARTS_WITH },
           ],
         },
+        CurrentUserDepartment:{ value: null, matchMode: FilterMatchMode.IN },
         supplier: {
           operator: FilterOperator.AND,
           constraints: [
@@ -457,35 +493,37 @@ this.filteredRows=data.length
       };
     },
      deleteSelectedProducts() {
-       console.log(this.selectedProducts)
-       this.selectedProducts.forEach(element => {
-              fetch(this.api+'/'+element._id,{
-                    method:'DELETE',}
+       //console.log(this.selectedProducts)
+      let ids=[]
+
+      ids=this.selectedProducts.map((element)=>{
+        return element._id
+      })
+      let query={
+        ids:ids
+      }
+       fetch(this.api+'/',{
+                    method:'DELETE',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify(query)}
                 )
-                .then(()=>{
+                .then((res)=>{
+                  this.selectedProducts.forEach(element => {
                   this.products=this.products.filter((product)=>{
                        return product._id!==element._id
-                          })
-                this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+                          })})
+
+                 this.selectedProducts=[]         
+                
+                return res.json()
+                }).then(data=>{
+                  //console.log(data.deletedCount)
+                  this.$toast.add({severity:'success', summary: 'Successful', detail:data.deletedCount + ' Products Deleted', life: 3000});
                 })
                 .catch(err=>{
                   this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
                   console.log(err)})
-            });
            this.deleteSelectedDialog=false;
-         /*this.$confirm.require({
-                message: 'Do you want to delete this record?',
-                header: 'Delete Confirmation',
-                icon: 'pi pi-info-circle',
-                acceptClass: 'p-button-danger',
-                accept: () => {
-            
-                    
-                },
-                reject: () => {
-                    this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-                }
-            });*/
 
 
         },

@@ -70,13 +70,13 @@
 
         <div class="p-field p-col">
             <span class="p-float-label">
-              <InputText id="inputtext" type="text" v-model="user.designation" />
+              <Dropdown v-model="user.designation" :options="designations"  optionLabel="name" optionValue="value"   />
               <label for="inputtext">User Designation </label>
             </span>
           </div>
           <div class="p-field p-col">
             <span class="p-float-label">
-              <InputText id="inputtext" type="text" v-model="user.department" />
+               <Dropdown v-model="user.department" :options="departments"  optionLabel="name" optionValue="value"   />
               <label for="inputtext">User Department</label>
             </span>
           </div>
@@ -168,16 +168,9 @@ export default {
             submitted: false,
             date: this.product.date,
             userDetails: this.product.userDetails,
-            categories: [
-
-                { name: "Computer", value: "computer" },
-                { name: "UPS", value: "UPS" },
-                { name: "Speaker", value: "speaker" },
-                { name: "Camera", value: "camera" },
-                { name: "Extension Board", value: "Extension Board" },
-                { name: "Ink", value: "Ink" },
-
-            ],
+            categories: [],
+            designations:[],
+            departments:[],
             selectedCity: null,
             statusOptions: ['Active', 'Instock', 'Inactive']
         };
@@ -189,8 +182,16 @@ export default {
 
       this.productService.getCategories().then((data) => {
       this.categories = data;
-      //console.log(this.categories);
     });
+
+    this.productService.getDepartments().then((data) => {
+      this.departments = data;
+    });
+
+this.productService.getDesignations().then((data) => {
+      this.designations = data;
+    });
+
     },
     methods: {
 

@@ -53,16 +53,10 @@ UI(User Interface) in run time.that's all in short.
          state.elements.cursor.style.animation = 'none'
          // hide cursor
           state.elements.cursor.style.display = 'none'
-          return true;
-      })
-    .start()
-    
-    if(test==true)
-    {console.log('got it')}
+          
+          ///////////////////////////////////////////
 
-//////
-setTimeout(()=>{
-var app2 = document.getElementById('myname-designation');
+          var app2 = document.getElementById('myname-designation');
 var typewriter2 = new Typewriter(app2, {
     loop: true,
     delay: 75,
@@ -77,6 +71,15 @@ typewriter2.changeDeleteSpeed(75)
     .typeString(`Full-stack Developer `)
     .pauseFor(250)
     .start()
+      })
+    .start()
+    
+    if(test==true)
+    {console.log('got it')}
+
+//////
+setTimeout(()=>{
+
 
     
 },43000)
