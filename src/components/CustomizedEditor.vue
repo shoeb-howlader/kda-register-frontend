@@ -5,10 +5,14 @@
                 <span class="ql-formats">
                     <select class="ql-header" defaultValue="0">
                         <option value="1">Heading</option>
-                        <option value="2">Subheading</option>
-                        <option value="0">Normal</option>
+                        <option value="2">Subheading 2</option>
+                        <option value="3">Subheading 3 </option>
+                        <option value="4">Subheading 4 </option>
+                        <option value="5">Subheading 5 </option>
+                        <option value="6">Subheading 6</option>
+                        <option value="0" selected>Normal</option>
                     </select>
-                    <select class="ql-font"  >
+                    <select class="ql-font"  defaultValue="times-new-roman">
                         
                         <option v-for="font in fontNames" :key="font.index" :value="font" ></option>
                         
@@ -56,7 +60,7 @@ export default {
     name: 'Editor',
     data() {
         return {
-            fonts:['Arial', 'Courier', 'Garamond', 'Tahoma', 'Times New Roman', 'Verdana','Nikosh'],
+            fonts:['Times New Roman','Nikosh','Arial', 'Courier', 'Garamond', 'Tahoma', 'Verdana','Sofia Pro'],
             fontNames:null
 
         }
@@ -109,6 +113,14 @@ document.body.appendChild(node);
         let Font = Quill.import("attributors/style/font");
 Font.whitelist = this.fontNames;
 Quill.register(Font, true);
+/////
+/*
+const fontSizeArr = ['8px','9px','10px','12px','14px','16px','20px','24px','32px','42px','54px','68px','84px','98px'];
+
+var Size = Quill.import('attributors/style/size');
+Size.whitelist = fontSizeArr;
+Quill.register(Size, true);*/
+//////
         this.quill = new Quill(this.$refs.editorElement, {
             modules: {
                 toolbar: this.$refs.toolbarElement
@@ -164,6 +176,12 @@ getFontName(font) {
  * Copyright (c) 2013, salesforce.com
  */
 
+
+
+.ql-snow .ql-picker.ql-header {
+  width: 150px !important;
+  white-space: nowrap;
+}
 .ql-snow .ql-picker.ql-font {
   width: 150px !important;
   white-space: nowrap;

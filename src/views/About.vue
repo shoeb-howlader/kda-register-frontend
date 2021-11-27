@@ -110,6 +110,7 @@ UI(User Interface) in run time.that's all in short.
 </script>
 <style lang="css">
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Inconsolata:wght@200&family=Lora:ital@1&family=Open+Sans:wght@300&family=Roboto:wght@100&display=swap');
+@import url('http://fonts.cdnfonts.com/css/sofia-pro');
 .about-h1{
     font-family: 'Lobster';
   font-size: larger;
@@ -119,6 +120,7 @@ UI(User Interface) in run time.that's all in short.
     text-align: justify; 
     font-size: large;
     box-shadow: inset;
+    font-style: normal;
     padding: 8px;
 }
 .myname-about{
