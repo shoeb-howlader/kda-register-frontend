@@ -1,5 +1,6 @@
 <template lang="">
 
+
         <Card class="p-mt-2" >
             <template #title>
                 Input Data Form
@@ -10,8 +11,24 @@
     <div class="card">
       <div class="p-fluid p-formgrid p-grid ">
       <div class="p-field p-dropdown">
-          <Dropdown v-model="category" :options="categories"  optionLabel="name" optionValue="value"  placeholder="Select Product Type" :class="{'p-invalid':!category && submitted}"/>
+          <!--Dropdown v-model="category" :options="categories"  optionLabel="name" optionValue="value"  placeholder="Select Product Type" :class="{'p-invalid':!category && submitted}"/-->
          <!--small id="supplier-help" class="p-error" v-if="!category && submitted">Category is required.</small--> 
+<Dropdown v-model="category" :options="categories" optionLabel="name" optionValue="value" :filter="true" placeholder="Select Product Type" :showClear="true" :class="{'p-invalid':!category && submitted}">
+            <template #value="slotProps">
+                <div class="country-item country-item-value" v-if="slotProps.value">
+                    <div>{{slotProps.value}}</div>
+                </div>
+                <span v-else>
+                    {{slotProps.placeholder}}
+                </span>
+            </template>
+            <template #option="slotProps">
+                <div class="country-item">
+                    <div>{{slotProps.option.name}}</div>
+                </div>
+            </template>
+        </Dropdown>
+        
       </div>
       <div class="p-field p-col">
          <span class="p-float-label">
@@ -67,16 +84,44 @@
           </div>
            <div class="p-field p-col">
             <span class="p-float-label">
-              <!--InputText id="inputtext" type="text" v-model="user.designation" /-->
-              <Dropdown v-model="user.designation" :options="designations"  optionLabel="name" optionValue="value"   />
-              <label for="inputtext">User Designation </label>
+              <!--Dropdown v-model="user.designation" :options="designations"  optionLabel="name" optionValue="value"   /-->
+              <Dropdown id="designation" v-model="user.designation" :options="designations" optionLabel="name" optionValue="value" :filter="true" placeholder="Select Designation" :showClear="true" >
+            <template #value="slotProps">
+                <div class="country-item country-item-value" v-if="slotProps.value">
+                    <div>{{slotProps.value}}</div>
+                </div>
+                <span v-else>
+                    {{slotProps.placeholder}}
+                </span>
+            </template>
+            <template #option="slotProps">
+                <div class="country-item">
+                    <div>{{slotProps.option.name}}</div>
+                </div>
+            </template>
+        </Dropdown>
+              <!--label for="designation">User Designation</!--label-->
             </span>
           </div>
           <div class="p-field p-col">
             <span class="p-float-label">
-              <!--InputText id="inputtext" type="text" v-model="user.department" /-->
-               <Dropdown v-model="user.department" :options="departments"  optionLabel="name" optionValue="value"   />
-              <label for="inputtext">User Department</label>
+               <!--Dropdown v-model="user.department" :options="departments"  optionLabel="name" optionValue="value"   /-->
+              <!--label for="inputtext">User Department</!--label-->
+              <Dropdown id="department" v-model="user.department" :options="departments" optionLabel="name" optionValue="value" :filter="true" placeholder="Select Department" :showClear="true" >
+            <template #value="slotProps">
+                <div class="country-item country-item-value" v-if="slotProps.value">
+                    <div>{{slotProps.value}}</div>
+                </div>
+                <span v-else>
+                    {{slotProps.placeholder}}
+                </span>
+            </template>
+            <template #option="slotProps">
+                <div class="country-item">
+                    <div>{{slotProps.option.name}}</div>
+                </div>
+            </template>
+        </Dropdown>
             </span>
           </div>
           <div class="p-field p-col">

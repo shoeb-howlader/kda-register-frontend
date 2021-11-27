@@ -494,6 +494,7 @@ this.filteredRows=data.length
     },
      deleteSelectedProducts() {
        //console.log(this.selectedProducts)
+       dUserText='';
       let ids=[]
 
       ids=this.selectedProducts.map((element)=>{
@@ -761,7 +762,7 @@ td.text-right {
 .product-description{
 
 width:100%;
-border: 1px solid green;
+/**border: 1px solid green;**/
 padding: 4px;
 border-radius: 5px;
 }

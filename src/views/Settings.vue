@@ -41,7 +41,7 @@
           </div>
           </Fieldset> 
            
-           <Fieldset legend="Edit Designations" :toggleable="true">
+           <Fieldset legend="Edit Designations" :toggleable="true" class="p-mt-5">
       
         <div class="p-grid p-jc-center">
             <div class="p-col-5">
@@ -78,7 +78,7 @@
 
           </div>
           </Fieldset> 
-                <Fieldset legend="Edit Departments" :toggleable="true">
+                <Fieldset legend="Edit Departments" :toggleable="true" class="p-mt-5">
       
         <div class="p-grid p-jc-center">
             <div class="p-col-5">
