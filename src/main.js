@@ -3,6 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+/////print libray
+//import VueHtmlToPaper from 'vue-html-to-paper';
+
+///imported locally , if support arises it will be added
+import VueHtmlToPaper from '../src/service/vue-html-to-paper';
+
 //createApp(App).use(store).use(router).mount('#app')
 import Editor from 'primevue/editor';
 import PrimeVue from 'primevue/config';
@@ -118,6 +124,28 @@ app.use(PrimeVue);
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
+
+////// printing options 
+const options = {
+    name: '_blank',
+    specs: [
+      'fullscreen=yes',
+      'titlebar=yes',
+      'scrollbars=yes'
+    ],
+    styles: [
+        'https://unpkg.com/primevue/resources/themes/lara-light-indigo/theme.css',
+        'https://unpkg.com/primevue/resources/primevue.min.css',
+        'https://unpkg.com/primeicons/primeicons.css',
+        'https://cdn.jsdelivr.net/npm/primeflex@2.0.0/primeflex.min.css',
+        
+
+    ],
+    timeout: 1000, // default timeout before the print window appears
+    autoClose: true, // if false, the window will not close after printing
+    windowTitle:'KDA Register Product Description' //window.document.title, // override the window title
+  }
+app.use(VueHtmlToPaper, options);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);

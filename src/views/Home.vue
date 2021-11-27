@@ -293,9 +293,14 @@
 
 
         <Dialog header="Product Details" v-model:visible="viewDialog" :style="{width: '70vw'}" :maximizable="true" :modal="true">
-              <div class="  p-mt-3">
-        
 
+              <Button type="button" class="p-button-outlined p-button-success" @click="printProduct('product_print')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
+              
+              <div id="product_print" class="  p-mt-3">
+        
         <table class="table-fill">
       <tbody class="table-hover">  
           <tr>
@@ -337,7 +342,7 @@
           </div>
           <div class="p-mt-3">
           <Fieldset legend="User Details">
-        <DataTable :value="product.userDetails" responsiveLayout="scroll">
+        <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
             
             <Column field="name" header="Name"></Column>
             <Column field="designation" header="Designation"></Column>
@@ -439,6 +444,10 @@ export default {
     });
   },
   methods: {
+   async printProduct(printId){
+ // Pass the element id here
+      await this.$htmlToPaper(printId);
+    },
     countRows(data)
     {
 console.log(data.length)
@@ -684,7 +693,7 @@ th:last-child {
   
 tr {
   border-top: 1px solid #C1C3D1;
-  border-bottom-: 1px solid #C1C3D1;
+  border-bottom: 1px solid #C1C3D1;
   color:#666B85;
   font-size:16px;
   font-weight:normal;
