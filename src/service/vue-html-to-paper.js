@@ -63,7 +63,7 @@
         win.document.write(`
         <html>
           <head>
-            <title>KDA Computer Section Register</title>
+            <title>Computer Section - Khulna Development Authority</title>
             <style>
             /*** Table Styles **/
 
