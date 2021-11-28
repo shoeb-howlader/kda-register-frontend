@@ -138,6 +138,7 @@ const options = {
         'https://unpkg.com/primevue/resources/primevue.min.css',
         'https://unpkg.com/primeicons/primeicons.css',
         'https://cdn.jsdelivr.net/npm/primeflex@2.0.0/primeflex.min.css',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
         
 
     ],

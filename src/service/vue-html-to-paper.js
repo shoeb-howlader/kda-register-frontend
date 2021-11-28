@@ -172,7 +172,6 @@
               text-align: right;
             }
             .product-description{
-            
             width:100%;
             /**border: 1px solid green;**/
             padding: 4px;

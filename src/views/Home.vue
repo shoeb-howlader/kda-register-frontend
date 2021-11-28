@@ -275,6 +275,7 @@
                 In total there are {{filteredRows}} products.
                
             </template>
+
       </DataTable>
     </div>
       <Dialog header="Input Data Form" v-model:visible="InputDialog" :style="{width: '70vw'}" :maximizable="true" :modal="true">
@@ -299,7 +300,7 @@
             <span class="p-ml-2 p-text-bold">Print</span>
         </Button>
               
-              <div id="product_print" class="  p-mt-3">
+              <div  class="  p-mt-3">
         
         <table class="table-fill">
       <tbody class="table-hover">  
@@ -337,7 +338,6 @@
           <div class="p-mt-6">
             <Fieldset legend="Product Description">
               <div class="product-description" v-html="product.productDescription"></div>
-            
             </Fieldset>
           </div>
           <div class="p-mt-3">
@@ -358,6 +358,77 @@
         </div>
     </div>
   </div>
+
+  <!--  print area start-->
+  <div style="display: none;">
+<div id="product_print" class="  p-mt-3 ">
+        
+        <table class="table-fill ">
+      <tbody class="table-hover">  
+          <tr>
+    <td class="text-left">product Category:</td>
+    <td class="text-left">{{product.category}}</td>
+         </tr>
+          <tr>
+    <td class="text-left">product supplier :</td>
+    <td class="text-left">{{product.supplier}}</td>
+         </tr>
+          <tr class="active-row">
+    <td class="text-left">Current user :</td>
+    <td class="text-left">{{product.CurrentUser}}</td>
+         </tr>
+         <tr class="active-row">
+    <td class="text-left">Current Designation :</td>
+    <td class="text-left">{{product.CurrentUserDesignation}}</td>
+         </tr>
+         <tr class="active-row">
+    <td class="text-left">Current Department :</td>
+    <td class="text-left">{{product.CurrentUserDepartment}}</td>
+         </tr>
+          <tr>
+    <td class="text-left">Purchase Date:</td>
+    <td class="text-left">{{formatDate(product.date)}}</td>
+         </tr>
+          <tr>
+    <td class="text-left">Status:</td>
+    <td class="text-left" :class="'customer-badge status-' + product.status">{{product.status}}</td>
+         </tr>
+         </tbody> 
+        </table>
+        <div>
+          <div class="p-mt-6 p-col-12">
+            <h2>Product Description:</h2>
+            <div class="card" style="width:100%;">
+  <div class="card-body">
+    
+    <div class="product-description card-text" v-html="product.productDescription"></div> 
+    
+  </div>
+</div>
+               
+          </div>
+          <div class="p-mt-3 p-col-12">
+          <h2>User Deatils:</h2>
+        <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
+            
+            <Column field="name" header="Name"></Column>
+            <Column field="designation" header="Designation"></Column>
+            <Column field="department" header="Department"></Column>
+            <Column field="date" header="Date">
+            <template #body="{ data }">{{
+            formatDate(data.date)
+          }}</template>
+            </Column>
+            <Column field="comment" header="Comment"></Column>
+        </DataTable>
+       
+        </div>
+    </div>
+  </div>
+
+
+  </div>
+  <!--print area end -->
 
         </Dialog>
 
