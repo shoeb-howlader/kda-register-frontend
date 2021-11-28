@@ -336,10 +336,16 @@
         </table>
         <div>
           <div class="p-mt-6">
+            <Fieldset legend="Supply Description">
+              <div class="product-description" v-html="product.supplyDescription"></div>
+            </Fieldset>
+          </div>
+          <div class="p-mt-6">
             <Fieldset legend="Product Description">
               <div class="product-description" v-html="product.productDescription"></div>
             </Fieldset>
           </div>
+
           <div class="p-mt-3">
           <Fieldset legend="User Details">
         <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
@@ -401,12 +407,22 @@
             <div class="card" style="width:100%;">
   <div class="card-body">
     
+    <div class="product-description card-text" v-html="product.supplyDescription"></div> 
+    
+  </div>
+</div>         
+          </div>
+          <div class="p-mt-6 p-col-12">
+            <h2>Product Description:</h2>
+            <div class="card" style="width:100%;">
+  <div class="card-body">
+    
     <div class="product-description card-text" v-html="product.productDescription"></div> 
     
   </div>
-</div>
-               
+</div>         
           </div>
+
           <div class="p-mt-3 p-col-12">
           <h2>User Deatils:</h2>
         <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>

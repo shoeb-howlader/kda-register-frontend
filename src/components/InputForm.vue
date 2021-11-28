@@ -60,6 +60,15 @@
            
                </div>
                </div>
+
+               <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col p-mt-5 p-mb-4">
+             <Fieldset legend="Supply Description">
+               <CustomizedEditor id="supplyDescription" v-model="supplyDescription" editorStyle="height: 320px" :class="{'p-invalid':!supplyDescription && submitted}"></CustomizedEditor>
+              <small id="supplyDescription-help" class="p-error" v-if="!supplyDescription && submitted">product Description is required.</small>
+            </Fieldset>
+            </div>
+          </div>
       
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col p-mt-5 p-mb-4">
@@ -198,6 +207,7 @@ export default {
             dummy: "",
             deleteProductDialog: false,
             category: '',
+            supplyDescription:"",
             productDescription: "",
             status: "Active",
             supplier: "",
@@ -287,6 +297,7 @@ this.productService.getDesignations().then((data) => {
                 CurrentUser: this.userDetails[0].name,
                 CurrentUserDesignation:this.userDetails[0].designation,
                 CurrentUserDepartment: this.userDetails[0].department,
+                supplyDescription:this.supplyDescription,
                 productDescription: this.productDescription,
                 status: this.status,
                 supplier: this.supplier,
@@ -306,6 +317,7 @@ this.productService.getDesignations().then((data) => {
                     this.$toast.add({ severity: 'success', summary: 'Data inserted successfully' ,life: 3000});
                     this.category = "",
                         this.productDescription = "",
+                        this.supplyDescription="",
                         this.status = "Active",
                         this.supplier = "",
                         this.date=null,

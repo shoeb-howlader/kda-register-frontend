@@ -60,6 +60,15 @@
                </div>
                </div>
       
+       <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col p-mt-5 p-mb-4">
+             <Fieldset legend="Supply Description">
+               <CustomizedEditor id="supplyDescription" v-model="supplyDescription" editorStyle="height: 320px" :class="{'p-invalid':!supplyDescription && submitted}"></CustomizedEditor>
+              <small id="supplyDescription-help" class="p-error" v-if="!supplyDescription && submitted">product Description is required.</small>
+            </Fieldset>
+            </div>
+          </div>
+
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col p-mt-5 p-mb-4">
              <Fieldset legend="Product Description">
@@ -207,6 +216,7 @@ export default {
             dummy: "",
             deleteProductDialog: false,
             category: this.product.category,
+            supplyDescription:this.product.supplyDescription,
             productDescription:this.product.productDescription,
             status:this.product.status ,
             supplier:this.product.supplier,
