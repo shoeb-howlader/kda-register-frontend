@@ -369,41 +369,41 @@
   <div style="display: none;">
 <div id="product_print" class="  p-mt-3 ">
         
-        <table class="table-fill ">
+        <table class="table table-bordered">
       <tbody class="table-hover">  
           <tr>
-    <td class="text-left">product Category:</td>
+    <th class="">product Category:</th>
     <td class="text-left">{{product.category}}</td>
          </tr>
           <tr>
-    <td class="text-left">product supplier :</td>
+    <th class="text-left">product supplier :</th>
     <td class="text-left">{{product.supplier}}</td>
          </tr>
           <tr class="active-row">
-    <td class="text-left">Current user :</td>
+    <th class="text-left">Current user :</th>
     <td class="text-left">{{product.CurrentUser}}</td>
          </tr>
          <tr class="active-row">
-    <td class="text-left">Current Designation :</td>
+    <th class="text-left">Current Designation :</th>
     <td class="text-left">{{product.CurrentUserDesignation}}</td>
          </tr>
          <tr class="active-row">
-    <td class="text-left">Current Department :</td>
+    <th class="text-left">Current Department :</th>
     <td class="text-left">{{product.CurrentUserDepartment}}</td>
          </tr>
           <tr>
-    <td class="text-left">Purchase Date:</td>
+    <th class="text-left">Purchase Date:</th>
     <td class="text-left">{{formatDate(product.date)}}</td>
          </tr>
           <tr>
-    <td class="text-left">Status:</td>
+    <th class="text-left">Status:</th>
     <td class="text-left" :class="'customer-badge status-' + product.status">{{product.status}}</td>
          </tr>
          </tbody> 
         </table>
         <div>
-          <div class="p-mt-6 p-col-12">
-            <h2>Product Description:</h2>
+          <div class="p-mt-2 p-col-12">
+            <h4>Supply Description:</h4>
             <div class="card" style="width:100%;">
   <div class="card-body">
     
@@ -412,8 +412,8 @@
   </div>
 </div>         
           </div>
-          <div class="p-mt-6 p-col-12">
-            <h2>Product Description:</h2>
+          <div class="p-mt-2 p-col-12">
+            <h4>Product Description:</h4>
             <div class="card" style="width:100%;">
   <div class="card-body">
     
@@ -424,7 +424,7 @@
           </div>
 
           <div class="p-mt-3 p-col-12">
-          <h2>User Deatils:</h2>
+          <h4>User Deatils:</h4>
         <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
             
             <Column field="name" header="Name"></Column>
@@ -472,7 +472,7 @@
                 <Button label="Yes" icon="pi pi-check" @click="deleteSelectedProducts" class="p-button-danger" :disabled="dUserText!='delete selected'" autofocus  />
             </template>
         </Dialog>
-    <Toast />
+    <Toast  position="top-left"/>
   </div>
 </template>
 
@@ -618,7 +618,7 @@ this.filteredRows=data.length
                   this.$toast.add({severity:'success', summary: 'Successful', detail:data.deletedCount + ' Products Deleted', life: 3000});
                 })
                 .catch(err=>{
-                  this.$toast.add({severity:'error', summary:'Confirmed', detail:'Something went worng', life: 3000});
+                  this.$toast.add({severity:'error', summary:'Error Message', detail:'Something went worng', life: 3000});
                   console.log(err)})
            this.deleteSelectedDialog=false;
 
@@ -666,7 +666,7 @@ this.InputDialog=!this.InputDialog
                     
                 },
                 reject: () => {
-                    this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+                   // this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected deletion', life: 3000});
                 }
             });
         }

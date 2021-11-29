@@ -294,6 +294,7 @@ this.productService.getDesignations().then((data) => {
             let product = {
                 category: this.category,
                 CurrentUser: this.userDetails[0].name,
+                 supplyDescription:this. supplyDescription,
                 productDescription: this.productDescription,
                 CurrentUserDesignation:this.userDetails[0].designation,
                 CurrentUserDepartment: this.userDetails[0].department,
@@ -312,14 +313,14 @@ this.productService.getDesignations().then((data) => {
                     //this.$router.push('/')
                     this.isLoading=false
                      this.$emit('emitReload');
-                    this.$toast.add({ severity: 'success', summary: 'Data inserted successfully' ,life: 3000});
+                    this.$toast.add({ severity: 'success', summary: 'Data updated successfully' ,life: 3000});
                    
 
                 })
                 .catch(err => {
                     this.isLoading=false
                     console.log(err)
-                    this.$toast.add({ severity: 'error', summary: 'Data not inserted ' ,life: 3000});
+                    this.$toast.add({ severity: 'error', summary: 'Data not updated' ,life: 3000});
                 }
                 )
                 this.submitted=false

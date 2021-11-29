@@ -69,7 +69,7 @@
             </Fieldset>
             </div>
           </div>
-      
+                
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col p-mt-5 p-mb-4">
              <Fieldset legend="Product Description">
@@ -78,7 +78,7 @@
             </Fieldset>
             </div>
           </div>
-
+          
 
 
     <Fieldset legend="User Details">
@@ -280,7 +280,7 @@ this.productService.getDesignations().then((data) => {
         saveProduct() {
           
           this.submitted = true
-           if (!this.supplier || !this.productDescription||!this.date||!this.category) {
+           if (!this.supplier || !this.productDescription||!this.date||!this.category||this.supplyDescription) {
              this.$toast.add({ severity: 'error', summary: 'Please Insert Required Filed' ,life: 3000});
                 return;
             }
