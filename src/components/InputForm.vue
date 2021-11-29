@@ -280,7 +280,7 @@ this.productService.getDesignations().then((data) => {
         saveProduct() {
           
           this.submitted = true
-           if (!this.supplier || !this.productDescription||!this.date||!this.category||this.supplyDescription) {
+           if (!this.supplier || !this.productDescription||!this.date||!this.category||!this.supplyDescription) {
              this.$toast.add({ severity: 'error', summary: 'Please Insert Required Filed' ,life: 3000});
                 return;
             }
