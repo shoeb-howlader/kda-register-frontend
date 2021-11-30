@@ -590,7 +590,7 @@ this.filteredRows=data.length
     },
      deleteSelectedProducts() {
        //console.log(this.selectedProducts)
-       dUserText='';
+       this.dUserText='';
       let ids=[]
 
       ids=this.selectedProducts.map((element)=>{
