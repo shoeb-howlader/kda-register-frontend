@@ -544,12 +544,12 @@
 
         <span class="p-input-icon-right">
           <i
-            style="color: red; fontsize: 1rem; font-weight: bold"
+            style="color: red; font-size: 1rem; font-weight: bold"
             class="pi pi-spin pi-spinner"
             v-if="dUserText != 'delete selected'"
           />
           <i
-            style="color: green; fontsize: 1rem; font-weight: bold"
+            style="color: green; font-size: 1rem; font-weight: bold"
             class="pi pi pi-check"
             v-else
           />
@@ -561,22 +561,12 @@
           />
         </span>
         <p
-          style="color: red; font-family: 'Roboto'; fontsize: 1rem; margin: 3px"
+          style="color: red; font-size: 1rem; margin: 3px"
           v-if="dUserText != 'delete selected'"
         >
           not matched
         </p>
-        <p
-          style="
-            color: green;
-            font-family: 'Roboto';
-            fontsize: 1rem;
-            margin: 3px;
-          "
-          v-else
-        >
-          matched
-        </p>
+        <p style="color: green; font-size: 1rem; margin: 3px" v-else>matched</p>
       </div>
       <template #footer>
         <Button
