@@ -5,8 +5,18 @@
     <div>
        <TabView>
 	<TabPanel header="Summary">
+    <Toolbar>
+    <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('summary')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
+    </template>
+</Toolbar>
+    <br>
+        <div id="summary" >
 	<h4>All products at a glance</h4>
-  <table class="table table-striped table-bordered">
+  <table  class="table table-bordered">
           <thead><tr>
             <th>SL. no</th>
             <th>Product Category</th>
@@ -20,56 +30,67 @@
           </tr>
           </tbody>
         </table>
+
+
+
+        </div>
 	</TabPanel>
-	<TabPanel header="department wise">
+
+	<TabPanel header="Department wise product list">
     <Toolbar>
     <template #start>
   <MultiSelect v-model="filteredCategories2" :options="categories" optionLabel="name" placeholder="Select Categories" display="chip" :filter="true" class="p-ml-2" />
     </template>
-
-    <template #end>
-        <Button icon="pi pi-search" class="p-mr-2" />
-        <Button icon="pi pi-calendar" class="p-button-success p-mr-2" />
-        <Button icon="pi pi-times" class="p-button-danger" />
+     <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('departmentWiseProductList')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
     </template>
 </Toolbar>
-		   <h4>products department wise </h4>
+<div id="departmentWiseProductList">
+		   
         <div v-for="category in filteredCategories2">
         <h5>{{category.name}} used by Authority</h5>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped">
           <thead><tr>
             <th>SL. no</th>
             <th>Section</th>
             <th>Number(active)</th>
           </tr></thead>
+          <tbody>
           <tr v-for="(department,index) in departments" key:index>
             <td>{{index+1}}</td>
               <td>{{department.name}}</td>
               <td>{{departmentWiseCount(department.name, category.name)}}</td>
           </tr>
-
+          </tbody>
          </table>
+
+        </div>
+
         </div>
 	</TabPanel>
+  
+
 	<TabPanel header="Department wise user list">
     <Toolbar>
     <template #start>
  <MultiSelect v-model="filteredDepartments" :options="departments" optionLabel="name" placeholder="Select Departments" display="chip" :filter="true" />
   <MultiSelect v-model="filteredCategories" :options="categories" optionLabel="name" placeholder="Select Categories" display="chip" :filter="true" class="p-ml-2" />
     </template>
-
-    <template #end>
-        <Button icon="pi pi-search" class="p-mr-2" />
-        <Button icon="pi pi-calendar" class="p-button-success p-mr-2" />
-        <Button icon="pi pi-times" class="p-button-danger" />
+     <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('departmentWiseUserList')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
     </template>
 </Toolbar>
+<div id="departmentWiseUserList">
 
-	     <h4>products department wise user list </h4>
         <div v-for="category in filteredCategories">
-          <h4>{{category.name}} user list</h4>
           <div v-for="department in filteredDepartments">
-            <h4>{{department.name}}</h4>
+            <h4>{{department.name}}-{{category.name}} user list</h4>
             <table class="table table-striped table-bordered">
              <thead><tr>
             <th>SL. no</th>
@@ -88,26 +109,24 @@
           </tbody>
             </table>
 
-          </div>
-        
+          </div>        
         
         </div>
+        </div>
 	</TabPanel>
-  <TabPanel header="Department wise product list">
+  <TabPanel header="Department at a glance">
     <Toolbar>
     <template #start>
  <MultiSelect v-model="filteredDepartments2" :options="departments" optionLabel="name" placeholder="Select Departments" display="chip" :filter="true" />
- 
     </template>
-
-    <template #end>
-        <Button icon="pi pi-search" class="p-mr-2" />
-        <Button icon="pi pi-calendar" class="p-button-success p-mr-2" />
-        <Button icon="pi pi-times" class="p-button-danger" />
+     <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('departmentAtaGlance')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
     </template>
-</Toolbar>
-
-	     <h4>products department wise user list </h4>
+   </Toolbar>
+<div id="departmentAtaGlance">
         <div v-for="department in filteredDepartments2">
           <h4>{{department.name}} Product list</h4>
           <div >
@@ -130,6 +149,7 @@
           </div>
         
         
+        </div>
         </div>
 	</TabPanel>
 
@@ -158,18 +178,6 @@
             </Column>
             
         </!--DataTable-->
-        
-
-
-
-
-
-   
-
-
-
-
-
     </div>
 
 
@@ -184,10 +192,10 @@ export default {
       products: [],
       categories: [],
       departments: [],
-      filteredDepartments:[],
-      filteredCategories:[],
-      filteredCategories2:[],
-      filteredDepartments2:[]
+      filteredDepartments: [],
+      filteredCategories: [],
+      filteredCategories2: [],
+      filteredDepartments2: [],
     };
   },
   created() {
@@ -212,6 +220,10 @@ export default {
   },
   computed: {},
   methods: {
+    async print(printId) {
+      // Pass the element id here
+      await this.$htmlToPaper(printId);
+    },
     categoryWiseCount(category) {
       // console.log(category)
       const count = this.products.filter(function (item) {
@@ -240,8 +252,7 @@ export default {
       //console.log(count);
       return count;
     },
-    departmentUserList(department, category)
-    {
+    departmentUserList(department, category) {
       const count = this.products.filter(function (item) {
         if (
           item.CurrentUserDepartment === department &&
@@ -255,10 +266,9 @@ export default {
       });
       console.log(count);
       return count;
-
     },
     formatDate(value) {
-      return value.toLocaleDateString('en-GB', {
+      return value.toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -267,35 +277,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
-.p-multiselect {
-    width: 18rem;
-}
 
-::v-deep(.multiselect-custom) {
-    .p-multiselect-label:not(.p-placeholder) {
-        padding-top: .25rem;
-        padding-bottom: .25rem;
-    }
+<style scoped src="../css/bootstarp/bootstrap.min.css"></style>
 
-    .country-item-value {
-        padding: .25rem .5rem;
-        border-radius: 3px;
-        display: inline-flex;
-        margin-right: .5rem;
-        background-color: var(--primary-color);
-        color: var(--primary-color-text);
-
-        img.flag {
-            width: 17px;
-        }
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .p-multiselect {
-        width: 100%;
-    }
-}
-</style>

@@ -135,21 +135,35 @@ export default {
   data() {
     return {
       categories: [],
-      deparments:[],
-      designations:[],
-      CategoryName:'',
-      departmentName:'',
-      designationName:'',
-      theme:localStorage.getItem('theme'),
-      categorySubmitted:false,
-      departmentSubmitted:false,
-      designationSubmitted:false,
-      themes:['md-light-indigo','md-light-deeppurple',
-      
-               'md-dark-indigo','md-dark-deeppurple','mdc-light-indigo','mdc-light-deeppurple','mdc-dark-indigo','mdc-dark-deeppurple','tailwind-light',
-               'fluent-light','saga-blue','saga-green','saga-orange','saga-purple',
-               'nova','nova-accent','nova-vue'
-               ]
+      deparments: [],
+      designations: [],
+      CategoryName: "",
+      departmentName: "",
+      designationName: "",
+      theme: localStorage.getItem("theme"),
+      categorySubmitted: false,
+      departmentSubmitted: false,
+      designationSubmitted: false,
+      themes: [
+        "md-light-indigo",
+        "md-light-deeppurple",
+
+        "md-dark-indigo",
+        "md-dark-deeppurple",
+        "mdc-light-indigo",
+        "mdc-light-deeppurple",
+        "mdc-dark-indigo",
+        "mdc-dark-deeppurple",
+        "tailwind-light",
+        "fluent-light",
+        "saga-blue",
+        "saga-green",
+        "saga-orange",
+        "saga-purple",
+        "nova",
+        "nova-accent",
+        "nova-vue",
+      ],
     };
   },
   created() {
@@ -160,117 +174,143 @@ export default {
       this.categories = data;
     });
 
-this.productService.getDepartments().then((data) => {
+    this.productService.getDepartments().then((data) => {
       this.deparments = data;
     });
 
     this.productService.getDesignations().then((data) => {
       this.designations = data;
     });
-
   },
   methods: {
-      addCategory() {
-        this.categorySubmitted=true;
-        if(!this.CategoryName){
-        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
-        return }
-        else{
-          let category={
-              name:this.CategoryName,
-              value:this.CategoryName
-          }
+    addCategory() {
+      this.categorySubmitted = true;
+      if (!this.CategoryName) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Empty field can not inserted",
+          life: 3000,
+        });
+        return;
+      } else {
+        let category = {
+          name: this.CategoryName,
+          value: this.CategoryName,
+        };
 
-            fetch(process.env.VUE_APP_API_CATEGORY, {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(category)
-            })
-                .then(() => {
-                    //this.$router.push('/')
-                    this.isLoading=false
-                    this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
-                    this.categories.push(category);
-                    this.CategoryName="",
-                    this.categorySubmitted=false;
-                })
-                .catch(err => {
-                    this.isLoading=false
-                    console.log(err)
-                    this.$toast.add({ severity: 'error', summary: 'ERROR: Category not inserted ' ,life: 3000});
-                }
-                )
-          
-          
-      }},
-        addDesignation() {
-        this.designationSubmitted=true;
-        if(!this.designationName){
-        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
-        return }
-        else{
-          let designation={
-              name:this.designationName,
-              value:this.designationName
-          }
+        fetch(process.env.VUE_APP_API_CATEGORY, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(category),
+        })
+          .then(() => {
+            //this.$router.push('/')
+            this.isLoading = false;
+            this.$toast.add({
+              severity: "success",
+              summary: "Category inserted successfully",
+              life: 3000,
+            });
+            this.categories.push(category);
+            (this.CategoryName = ""), (this.categorySubmitted = false);
+          })
+          .catch((err) => {
+            this.isLoading = false;
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR: Category not inserted ",
+              life: 3000,
+            });
+          });
+      }
+    },
+    addDesignation() {
+      this.designationSubmitted = true;
+      if (!this.designationName) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Empty field can not inserted",
+          life: 3000,
+        });
+        return;
+      } else {
+        let designation = {
+          name: this.designationName,
+          value: this.designationName,
+        };
 
-            fetch(process.env.VUE_APP_API_DESIGNATION, {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(designation)
-            })
-                .then(() => {
-                    //this.$router.push('/')
-                    this.isLoading=false
-                    this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
-                    this.designations.push(designation);
-                    this.designationName="",
-                    this.designationSubmitted=false;
-                })
-                .catch(err => {
-                    this.isLoading=false
-                    console.log(err)
-                    this.$toast.add({ severity: 'error', summary: 'ERROR: Category not inserted ' ,life: 3000});
-                }
-                )
-          
-          
-      }},
-  addDepartment() {
-        this.departmentSubmitted=true;
-        if(!this.departmentName){
-        this.$toast.add({ severity: 'error', summary: 'Empty field can not inserted' ,life: 3000});
-        return }
-        else{
-          let department={
-              name:this.departmentName,
-              value:this.departmentName
-          }
+        fetch(process.env.VUE_APP_API_DESIGNATION, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(designation),
+        })
+          .then(() => {
+            //this.$router.push('/')
+            this.isLoading = false;
+            this.$toast.add({
+              severity: "success",
+              summary: "Category inserted successfully",
+              life: 3000,
+            });
+            this.designations.push(designation);
+            (this.designationName = ""), (this.designationSubmitted = false);
+          })
+          .catch((err) => {
+            this.isLoading = false;
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR: Category not inserted ",
+              life: 3000,
+            });
+          });
+      }
+    },
+    addDepartment() {
+      this.departmentSubmitted = true;
+      if (!this.departmentName) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Empty field can not inserted",
+          life: 3000,
+        });
+        return;
+      } else {
+        let department = {
+          name: this.departmentName,
+          value: this.departmentName,
+        };
 
-            fetch(process.env.VUE_APP_API_DEPARTMENT, {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(department)
-            })
-                .then(() => {
-                    //this.$router.push('/')
-                    this.isLoading=false
-                    this.$toast.add({ severity: 'success', summary: 'Category inserted successfully' ,life: 3000});
-                    this.deparments.push(department);
-                    this.departmentName="",
-                    this.departmentSubmitted=false;
-                })
-                .catch(err => {
-                    this.isLoading=false
-                    console.log(err)
-                    this.$toast.add({ severity: 'error', summary: 'ERROR: Category not inserted ' ,life: 3000});
-                }
-                )
-          
-          
-      }},
-       changeTheme(theme) {
-         console.log('theme changed')
+        fetch(process.env.VUE_APP_API_DEPARTMENT, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(department),
+        })
+          .then(() => {
+            //this.$router.push('/')
+            this.isLoading = false;
+            this.$toast.add({
+              severity: "success",
+              summary: "Category inserted successfully",
+              life: 3000,
+            });
+            this.deparments.push(department);
+            (this.departmentName = ""), (this.departmentSubmitted = false);
+          })
+          .catch((err) => {
+            this.isLoading = false;
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR: Category not inserted ",
+              life: 3000,
+            });
+          });
+      }
+    },
+    changeTheme(theme) {
+      console.log("theme changed");
       let themeElement = document.getElementById("theme-link");
       themeElement.setAttribute(
         "href",
@@ -284,50 +324,50 @@ this.productService.getDepartments().then((data) => {
         this.$primevue.config.ripple = true;
       }
       localStorage.setItem("theme", this.theme);
-    }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 .p-button {
-    margin-right: .5rem;
-    margin-top:10px;
+  margin-right: 0.5rem;
+  margin-top: 10px;
 }
 
 .p-buttonset {
-    .p-button {
-        margin-right: 0;
-    }
+  .p-button {
+    margin-right: 0;
+  }
 }
 
 .sizes {
-    .button {
-        margin-bottom: .5rem;
-        display: block;
+  .button {
+    margin-bottom: 0.5rem;
+    display: block;
 
-        &:last-child {
-            margin-bottom: 0;
-        }
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 }
 
 @media screen and (max-width: 640px) {
+  .p-button {
+    margin-bottom: 0.5rem;
+
+    &:not(.p-button-icon-only) {
+      display: flex;
+      width: 100%;
+    }
+  }
+
+  .p-buttonset {
     .p-button {
-        margin-bottom: .5rem;
-
-        &:not(.p-button-icon-only) {
-            display: flex;
-            width: 100%;
-        }
+      margin-bottom: 0;
     }
-
-    .p-buttonset {
-        .p-button {
-            margin-bottom: 0;
-        }
-    }
+  }
 }
-.btn{
-  margin-top:0px;
+.btn {
+  margin-top: 0px;
 }
 </style>

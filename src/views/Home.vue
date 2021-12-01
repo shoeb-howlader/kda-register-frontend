@@ -2,28 +2,43 @@
   <div>
     <div class="card">
       <Toolbar class="p-mb-4">
-                <template #start>
-                    <Button label="New" icon="pi pi-plus" class="p-button-success p-mr-2" @click="openNew" />
-                    <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="deleteSelectedDialog=true" :disabled="!selectedProducts || !selectedProducts.length" />
-                </template>
+        <template #start>
+          <Button
+            label="New"
+            icon="pi pi-plus"
+            class="p-button-success p-mr-2"
+            @click="openNew"
+          />
+          <Button
+            label="Delete"
+            icon="pi pi-trash"
+            class="p-button-danger"
+            @click="deleteSelectedDialog = true"
+            :disabled="!selectedProducts || !selectedProducts.length"
+          />
+        </template>
 
-                <template #end>
-                    <!--FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block" /-->
-                    <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)"  />
-                </template>
-            </Toolbar>
+        <template #end>
+          <!--FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block" /-->
+          <Button
+            label="Export"
+            icon="pi pi-upload"
+            class="p-button-help"
+            @click="exportCSV($event)"
+          />
+        </template>
+      </Toolbar>
       <DataTable
         @value-change="countRows"
         :value="products"
         ref="dt"
         :paginator="true"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        :rowsPerPageOptions="[10,20,50,100,200,500,1000]"
+        :rowsPerPageOptions="[10, 20, 50, 100, 200, 500, 1000]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
         class="p-datatable-customers"
-        :resizableColumns="true" columnResizeMode="fit"
-        
-        
+        :resizableColumns="true"
+        columnResizeMode="fit"
         showGridlines
         :rows="10"
         data-key="_id"
@@ -34,38 +49,52 @@
         stateStorage="local"
         stateKey="dt-state-demo-local"
         v-model:selection="selectedProducts"
-        :globalFilterFields="['CurrentUser', 'supplier','productDescription','CurrentUserDesignation','CurrentUserDepartment']"
+        :globalFilterFields="[
+          'CurrentUser',
+          'supplier',
+          'productDescription',
+          'CurrentUserDesignation',
+          'CurrentUserDepartment',
+        ]"
       >
         <template #header>
-          
           <div class="p-d-flex p-jc-between">
             <h5 class="p-mb-2 p-m-md-0 p-as-md-center">Manage Products</h5>
             <div>
-              <h5 class="p-mb-2 p-m-md-0 p-as-md-center"><Badge :value="filteredRows"  size="xlarge"  class="p-mr-2"></Badge> </h5>
+              <h5 class="p-mb-2 p-m-md-0 p-as-md-center">
+                <Badge
+                  :value="filteredRows"
+                  size="xlarge"
+                  class="p-mr-2"
+                ></Badge>
+              </h5>
             </div>
-            <div> <Button
-              type="button"
-              icon="pi pi-filter-slash"
-              label="Clear"
-              class="p-button-outlined p-button-raised"
-              @click="clearFilter1()"
-            />
-            
-            <span class="p-input-icon-left p-ml-2">
-              <i class="pi pi-search" />
-              <InputText
-                v-model="filters1['global'].value"
-                placeholder="Keyword Search"
+            <div>
+              <Button
+                type="button"
+                icon="pi pi-filter-slash"
+                label="Clear"
+                class="p-button-outlined p-button-raised"
+                @click="clearFilter1()"
               />
-            </span>
+
+              <span class="p-input-icon-left p-ml-2">
+                <i class="pi pi-search" />
+                <InputText
+                  v-model="filters1['global'].value"
+                  placeholder="Keyword Search"
+                />
+              </span>
             </div>
-           
-            
           </div>
         </template>
         <template #empty>No products found.</template>
         <template #loading>Loading Products data. Please wait.</template>
-        <Column selectionMode="multiple" style="width: 3rem"  :exportable="false"></Column>
+        <Column
+          selectionMode="multiple"
+          style="width: 3rem"
+          :exportable="false"
+        ></Column>
         <Column
           field="CurrentUser"
           header="Current User"
@@ -84,7 +113,7 @@
         </Column>
 
         <Column
-        field="CurrentUserDepartment"
+          field="CurrentUserDepartment"
           header="User Department"
           filterField="CurrentUserDepartment"
           :sortable="true"
@@ -155,7 +184,7 @@
           </template>
         </Column>
         <Column
-        field="category"
+          field="category"
           header="Category"
           filterField="category"
           :sortable="true"
@@ -185,16 +214,14 @@
           </template>
         </Column>
         <Column
-        field="date"
+          field="date"
           header="Purchase date"
           filterField="date"
           data-type="date"
           :sortable="true"
           style="min-width: 10rem"
         >
-          <template #body="{ data }">{{
-            formatDate(data.date)
-          }}</template>
+          <template #body="{ data }">{{ formatDate(data.date) }}</template>
           <template #filter="{ filterModel }">
             <Calendar
               v-model="filterModel.value"
@@ -213,7 +240,9 @@
           style="min-width: 12rem"
         >
           <template #body="{ data }">
-            <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
+            <span :class="'customer-badge status-' + data.status">{{
+              data.status
+            }}</span>
           </template>
           <template #filter="{ filterModel }">
             <div class="p-mb-3 p-text-bold">Select Status</div>
@@ -224,18 +253,23 @@
               optionValue="value"
               placeholder="Any"
               class="p-column-filter"
-             
             >
-             <template #value="slotProps">
-                <div class="country-item country-item-value" v-for="option of slotProps.value" :key="option.code">
-                    <span :class="'customer-badge status-' + option">
-                  {{ option }}
-                </span> 
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-for="option of slotProps.value"
+                  :key="option.code"
+                >
+                  <span :class="'customer-badge status-' + option">
+                    {{ option }}
+                  </span>
                 </div>
-                <template v-if="!slotProps.value || slotProps.value.length === 0">
-                    Any
+                <template
+                  v-if="!slotProps.value || slotProps.value.length === 0"
+                >
+                  Any
                 </template>
-            </template>
+              </template>
 
               <template #option="slotProps">
                 <span :class="'customer-badge status-' + slotProps.option.name">
@@ -262,244 +296,333 @@
               class="p-button-rounded p-button-danger p-button-raised"
               @click="confirmDeleteProduct(slotProps.data)"
             />
-            
           </template>
         </Column>
         <template #paginatorstart>
-                <Button type="button" icon="pi pi-refresh" class="p-button-text" @click="reload" />
-            </template>
-            <template #paginatorend>
-                <Button type="button" icon="pi pi-cloud" class="p-button-text" />
-            </template>
-            <template #footer>
-                In total there are {{filteredRows}} products.
-               
-            </template>
-
+          <Button
+            type="button"
+            icon="pi pi-refresh"
+            class="p-button-text"
+            @click="reload"
+          />
+        </template>
+        <template #paginatorend>
+          <Button type="button" icon="pi pi-cloud" class="p-button-text" />
+        </template>
+        <template #footer>
+          In total there are {{ filteredRows }} products.
+        </template>
       </DataTable>
     </div>
-      <Dialog header="Input Data Form" v-model:visible="InputDialog" :style="{width: '70vw'}" :maximizable="true" :modal="true">
-              <div class="  p-mt-3">
-        <InputForm @emitReload="reload"/>
-  </div>
+    <Dialog
+      header="Input Data Form"
+      v-model:visible="InputDialog"
+      :style="{ width: '70vw' }"
+      :maximizable="true"
+      :modal="true"
+    >
+      <div class="p-mt-3">
+        <InputForm @emitReload="reload" />
+      </div>
+    </Dialog>
 
-        </Dialog>
+    <Dialog
+      header="Edit Data Form"
+      v-model:visible="editDialog"
+      :style="{ width: '70vw' }"
+      :maximizable="true"
+      :modal="true"
+    >
+      <div class="p-shadow-10 p-mt-3">
+        <editForm :product="editingProduct" @emitReload="reload" />
+      </div>
+    </Dialog>
 
-        <Dialog header="Edit Data Form" v-model:visible="editDialog" :style="{width: '70vw'}" :maximizable="true" :modal="true">
-              <div class=" p-shadow-10 p-mt-3">
-        <editForm :product="editingProduct" @emitReload="reload"/>
-  </div>
+    <Dialog
+      header="Product Details"
+      v-model:visible="viewDialog"
+      :style="{ width: '70vw' }"
+      :maximizable="true"
+      :modal="true"
+    >
+      <Button
+        type="button"
+        class="p-button-outlined p-button-success"
+        @click="printProduct('product_print')"
+      >
+        <img
+          alt="logo"
+          src="https://img.icons8.com/color/48/000000/print.png"
+          style="width: 1.5rem"
+        />
+        <span class="p-ml-2 p-text-bold">Print</span>
+      </Button>
 
-        </Dialog>
-
-
-        <Dialog header="Product Details" v-model:visible="viewDialog" :style="{width: '70vw'}" :maximizable="true" :modal="true">
-
-              <Button type="button" class="p-button-outlined p-button-success" @click="printProduct('product_print')">
-            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
-            <span class="p-ml-2 p-text-bold">Print</span>
-        </Button>
-              
-              <div  class="  p-mt-3">
-        
+      <div class="p-mt-3">
         <table class="table-fill">
-      <tbody class="table-hover">  
-          <tr>
-    <td class="text-left">product Category:</td>
-    <td class="text-left">{{product.category}}</td>
-         </tr>
-          <tr>
-    <td class="text-left">product supplier :</td>
-    <td class="text-left">{{product.supplier}}</td>
-         </tr>
-          <tr class="active-row">
-    <td class="text-left">Current user :</td>
-    <td class="text-left">{{product.CurrentUser}}</td>
-         </tr>
-         <tr class="active-row">
-    <td class="text-left">Current Designation :</td>
-    <td class="text-left">{{product.CurrentUserDesignation}}</td>
-         </tr>
-         <tr class="active-row">
-    <td class="text-left">Current Department :</td>
-    <td class="text-left">{{product.CurrentUserDepartment}}</td>
-         </tr>
-          <tr>
-    <td class="text-left">Purchase Date:</td>
-    <td class="text-left">{{formatDate(product.date)}}</td>
-         </tr>
-          <tr>
-    <td class="text-left">Status:</td>
-    <td class="text-left" :class="'customer-badge status-' + product.status">{{product.status}}</td>
-         </tr>
-         </tbody> 
+          <tbody class="table-hover">
+            <tr>
+              <td class="text-left">product Category:</td>
+              <td class="text-left">{{ product.category }}</td>
+            </tr>
+            <tr>
+              <td class="text-left">product supplier :</td>
+              <td class="text-left">{{ product.supplier }}</td>
+            </tr>
+            <tr class="active-row">
+              <td class="text-left">Current user :</td>
+              <td class="text-left">{{ product.CurrentUser }}</td>
+            </tr>
+            <tr class="active-row">
+              <td class="text-left">Current Designation :</td>
+              <td class="text-left">{{ product.CurrentUserDesignation }}</td>
+            </tr>
+            <tr class="active-row">
+              <td class="text-left">Current Department :</td>
+              <td class="text-left">{{ product.CurrentUserDepartment }}</td>
+            </tr>
+            <tr>
+              <td class="text-left">Purchase Date:</td>
+              <td class="text-left">{{ formatDate(product.date) }}</td>
+            </tr>
+            <tr>
+              <td class="text-left">Status:</td>
+              <td
+                class="text-left"
+                :class="'customer-badge status-' + product.status"
+              >
+                {{ product.status }}
+              </td>
+            </tr>
+          </tbody>
         </table>
         <div>
           <div class="p-mt-6">
             <Fieldset legend="Supply Description">
-              <div class="product-description" v-html="product.supplyDescription"></div>
+              <div
+                class="product-description"
+                v-html="product.supplyDescription"
+              ></div>
             </Fieldset>
           </div>
           <div class="p-mt-6">
             <Fieldset legend="Product Description">
-              <div class="product-description" v-html="product.productDescription"></div>
+              <div
+                class="product-description"
+                v-html="product.productDescription"
+              ></div>
             </Fieldset>
           </div>
 
           <div class="p-mt-3">
-          <Fieldset legend="User Details">
-        <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
-            
-            <Column field="name" header="Name"></Column>
-            <Column field="designation" header="Designation"></Column>
-            <Column field="department" header="Department"></Column>
-            <Column field="date" header="Date">
-            <template #body="{ data }">{{
-            formatDate(data.date)
-          }}</template>
-            </Column>
-            <Column field="comment" header="Comment"></Column>
-        </DataTable>
-        </Fieldset>
-        </div>
-    </div>
-  </div>
-
-  <!--  print area start-->
-  <div style="display: none;">
-<div id="product_print" class="  p-mt-3 ">
-        
-        <table class="table table-bordered">
-      <tbody class="table-hover">  
-          <tr>
-    <th class="">product Category:</th>
-    <td class="text-left">{{product.category}}</td>
-         </tr>
-          <tr>
-    <th class="text-left">product supplier :</th>
-    <td class="text-left">{{product.supplier}}</td>
-         </tr>
-          <tr class="active-row">
-    <th class="text-left">Current user :</th>
-    <td class="text-left">{{product.CurrentUser}}</td>
-         </tr>
-         <tr class="active-row">
-    <th class="text-left">Current Designation :</th>
-    <td class="text-left">{{product.CurrentUserDesignation}}</td>
-         </tr>
-         <tr class="active-row">
-    <th class="text-left">Current Department :</th>
-    <td class="text-left">{{product.CurrentUserDepartment}}</td>
-         </tr>
-          <tr>
-    <th class="text-left">Purchase Date:</th>
-    <td class="text-left">{{formatDate(product.date)}}</td>
-         </tr>
-          <tr>
-    <th class="text-left">Status:</th>
-    <td class="text-left" :class="'customer-badge status-' + product.status">{{product.status}}</td>
-         </tr>
-         </tbody> 
-        </table>
-        <div>
-          <div class="p-mt-2 p-col-12">
-            <h4>Supply Description:</h4>
-            <div class="card" style="width:100%;">
-  <div class="card-body">
-    
-    <div class="product-description card-text" v-html="product.supplyDescription"></div> 
-    
-  </div>
-</div>         
+            <Fieldset legend="User Details">
+              <DataTable
+                :value="product.userDetails"
+                responsiveLayout="scroll"
+                showGridlines
+                stripedRows
+              >
+                <Column field="name" header="Name"></Column>
+                <Column field="designation" header="Designation"></Column>
+                <Column field="department" header="Department"></Column>
+                <Column field="date" header="Date">
+                  <template #body="{ data }">{{
+                    formatDate(data.date)
+                  }}</template>
+                </Column>
+                <Column field="comment" header="Comment"></Column>
+              </DataTable>
+            </Fieldset>
           </div>
-          <div class="p-mt-2 p-col-12">
-            <h4>Product Description:</h4>
-            <div class="card" style="width:100%;">
-  <div class="card-body">
-    
-    <div class="product-description card-text" v-html="product.productDescription"></div> 
-    
-  </div>
-</div>         
-          </div>
-
-          <div class="p-mt-3 p-col-12">
-          <h4>User Deatils:</h4>
-        <DataTable :value="product.userDetails" responsiveLayout="scroll" showGridlines stripedRows>
-            
-            <Column field="name" header="Name"></Column>
-            <Column field="designation" header="Designation"></Column>
-            <Column field="department" header="Department"></Column>
-            <Column field="date" header="Date">
-            <template #body="{ data }">{{
-            formatDate(data.date)
-          }}</template>
-            </Column>
-            <Column field="comment" header="Comment"></Column>
-        </DataTable>
-       
         </div>
-    </div>
-  </div>
+      </div>
 
+      <!--  print area start-->
+      <div style="display: none">
+        <div id="product_print" class="p-mt-3">
+          <table class="table table-bordered">
+            <tbody class="table-hover">
+              <tr>
+                <th class="">product Category:</th>
+                <td class="text-left">{{ product.category }}</td>
+              </tr>
+              <tr>
+                <th class="text-left">product supplier :</th>
+                <td class="text-left">{{ product.supplier }}</td>
+              </tr>
+              <tr class="active-row">
+                <th class="text-left">Current user :</th>
+                <td class="text-left">{{ product.CurrentUser }}</td>
+              </tr>
+              <tr class="active-row">
+                <th class="text-left">Current Designation :</th>
+                <td class="text-left">{{ product.CurrentUserDesignation }}</td>
+              </tr>
+              <tr class="active-row">
+                <th class="text-left">Current Department :</th>
+                <td class="text-left">{{ product.CurrentUserDepartment }}</td>
+              </tr>
+              <tr>
+                <th class="text-left">Purchase Date:</th>
+                <td class="text-left">{{ formatDate(product.date) }}</td>
+              </tr>
+              <tr>
+                <th class="text-left">Status:</th>
+                <td
+                  class="text-left"
+                  :class="'customer-badge status-' + product.status"
+                >
+                  {{ product.status }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="p-mt-2 p-col-12">
+              <h4>Supply Description:</h4>
+              <div class="card" style="width: 100%">
+                <div class="card-body">
+                  <div
+                    class="product-description card-text"
+                    v-html="product.supplyDescription"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="p-mt-2 p-col-12">
+              <h4>Product Description:</h4>
+              <div class="card" style="width: 100%">
+                <div class="card-body">
+                  <div
+                    class="product-description card-text"
+                    v-html="product.productDescription"
+                  ></div>
+                </div>
+              </div>
+            </div>
 
-  </div>
-  <!--print area end -->
-
-        </Dialog>
+            <div class="p-mt-3 p-col-12">
+              <h4>User Deatils:</h4>
+              <DataTable
+                :value="product.userDetails"
+                responsiveLayout="scroll"
+                showGridlines
+                stripedRows
+              >
+                <Column field="name" header="Name"></Column>
+                <Column field="designation" header="Designation"></Column>
+                <Column field="department" header="Department"></Column>
+                <Column field="date" header="Date">
+                  <template #body="{ data }">{{
+                    formatDate(data.date)
+                  }}</template>
+                </Column>
+                <Column field="comment" header="Comment"></Column>
+              </DataTable>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--print area end -->
+    </Dialog>
 
     <ConfirmDialog></ConfirmDialog>
 
-      <Dialog header="Confirmation" v-model:visible="deleteSelectedDialog" :style="{width: '350px'}" :modal="true">
-            <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
-                <span>Are you sure you want to proceed?</span>
+    <Dialog
+      header="Confirmation"
+      v-model:visible="deleteSelectedDialog"
+      :style="{ width: '350px' }"
+      :modal="true"
+    >
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+        <span>Are you sure you want to proceed?</span>
 
-                <p style="margin:5px">please type here <span style="color:red">delete selected</span></p>
-                
-                 <span class="p-input-icon-right">
-            <i style="color:red; fontSize: 1rem; font-weight: bold;" class="pi pi-spin pi-spinner" v-if="dUserText!='delete selected'"/>
-            <i style="color:green; fontSize: 1rem; font-weight: bold;" class="pi  pi pi-check" v-else/>
-            
-            <InputText type="text" v-model="dUserText" :class="{'p-invalid':dUserText!='delete selected'}"/>
+        <p style="margin: 5px">
+          please type here <span style="color: red">delete selected</span>
+        </p>
+
+        <span class="p-input-icon-right">
+          <i
+            style="color: red; fontsize: 1rem; font-weight: bold"
+            class="pi pi-spin pi-spinner"
+            v-if="dUserText != 'delete selected'"
+          />
+          <i
+            style="color: green; fontsize: 1rem; font-weight: bold"
+            class="pi pi pi-check"
+            v-else
+          />
+
+          <InputText
+            type="text"
+            v-model="dUserText"
+            :class="{ 'p-invalid': dUserText != 'delete selected' }"
+          />
         </span>
-                <p style="color:red; font-family:'Roboto';fontSize: 1rem; margin:3px;" v-if="dUserText!='delete selected'">not matched </p>
-                <p style="color:green;font-family:'Roboto';fontSize: 1rem;margin:3px; " v-else >matched </p>
-                
-            </div>
-            <template #footer>
-                <Button label="No" icon="pi pi-times" @click="deleteSelectedDialog=false" class="p-button-success"/>
-                <Button label="Yes" icon="pi pi-check" @click="deleteSelectedProducts" class="p-button-danger" :disabled="dUserText!='delete selected'" autofocus  />
-            </template>
-        </Dialog>
-    <Toast  position="top-left"/>
+        <p
+          style="color: red; font-family: 'Roboto'; fontsize: 1rem; margin: 3px"
+          v-if="dUserText != 'delete selected'"
+        >
+          not matched
+        </p>
+        <p
+          style="
+            color: green;
+            font-family: 'Roboto';
+            fontsize: 1rem;
+            margin: 3px;
+          "
+          v-else
+        >
+          matched
+        </p>
+      </div>
+      <template #footer>
+        <Button
+          label="No"
+          icon="pi pi-times"
+          @click="deleteSelectedDialog = false"
+          class="p-button-success"
+        />
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          @click="deleteSelectedProducts"
+          class="p-button-danger"
+          :disabled="dUserText != 'delete selected'"
+          autofocus
+        />
+      </template>
+    </Dialog>
+    <Toast position="top-left" />
   </div>
 </template>
 
 <script>
-import EditForm from '../components/editForm.vue'
-import InputForm from '../components/InputForm.vue'
+import EditForm from "../components/editForm.vue";
+import InputForm from "../components/InputForm.vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import ProductService from "../service/ProductService";
 export default {
   components: { InputForm, EditForm },
   data() {
     return {
-      api:process.env.VUE_APP_API_PRODUCT,
+      api: process.env.VUE_APP_API_PRODUCT,
       products: [],
       customers1: null,
       customers2: null,
       filters1: null,
       selectedProducts: null,
-      InputDialog:false,
-      viewDialog:false,
-      editDialog:false,
-      deleteSelectedDialog:false,
-      product:null,
-      editingProduct:null,
-      filteredRows:null,
-      dUserText:null,
-      departments:[],
+      InputDialog: false,
+      viewDialog: false,
+      editDialog: false,
+      deleteSelectedDialog: false,
+      product: null,
+      editingProduct: null,
+      filteredRows: null,
+      dUserText: null,
+      departments: [],
       categories: [],
       statuses: [
         { name: "Active", value: "Active" },
@@ -525,33 +648,36 @@ export default {
       this.categories = data;
       //console.log(this.categories);
     });
- 
- this.productService.getDepartments().then((data) => {
+
+    this.productService.getDepartments().then((data) => {
       this.departments = data;
     });
   },
   methods: {
-   async printProduct(printId){
- // Pass the element id here
+    async printProduct(printId) {
+      // Pass the element id here
       await this.$htmlToPaper(printId);
     },
-    countRows(data)
-    {
-console.log(data.length)
-this.filteredRows=data.length
+    countRows(data) {
+      console.log(data.length);
+      this.filteredRows = data.length;
     },
-     onColReorder() {
-            this.$toast.add({severity:'success', summary: 'Column Reordered', life: 3000});
-        },
-    reload(){
+    onColReorder() {
+      this.$toast.add({
+        severity: "success",
+        summary: "Column Reordered",
+        life: 3000,
+      });
+    },
+    reload() {
       this.loading1 = true;
- this.productService.getProducts().then((data) => {
-      this.products = data;
-      this.loading1 = false;
-    });
+      this.productService.getProducts().then((data) => {
+        this.products = data;
+        this.loading1 = false;
+      });
     },
     formatDate(value) {
-      return value.toLocaleDateString('en-GB', {
+      return value.toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -569,7 +695,7 @@ this.filteredRows=data.length
             { value: null, matchMode: FilterMatchMode.STARTS_WITH },
           ],
         },
-        CurrentUserDepartment:{ value: null, matchMode: FilterMatchMode.IN },
+        CurrentUserDepartment: { value: null, matchMode: FilterMatchMode.IN },
         supplier: {
           operator: FilterOperator.AND,
           constraints: [
@@ -585,91 +711,108 @@ this.filteredRows=data.length
           operator: FilterOperator.AND,
           constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
         },
-        status: { value: null, matchMode: FilterMatchMode.IN},
+        status: { value: null, matchMode: FilterMatchMode.IN },
       };
     },
-     deleteSelectedProducts() {
-       //console.log(this.selectedProducts)
-       this.dUserText='';
-      let ids=[]
+    deleteSelectedProducts() {
+      //console.log(this.selectedProducts)
+      this.dUserText = "";
+      let ids = [];
 
-      ids=this.selectedProducts.map((element)=>{
-        return element._id
+      ids = this.selectedProducts.map((element) => {
+        return element._id;
+      });
+      let query = {
+        ids: ids,
+      };
+      fetch(this.api + "/", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(query),
       })
-      let query={
-        ids:ids
-      }
-       fetch(this.api+'/',{
-                    method:'DELETE',
-                    headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify(query)}
-                )
-                .then((res)=>{
-                  this.selectedProducts.forEach(element => {
-                  this.products=this.products.filter((product)=>{
-                       return product._id!==element._id
-                          })})
-
-                 this.selectedProducts=[]         
-                
-                return res.json()
-                }).then(data=>{
-                  //console.log(data.deletedCount)
-                  this.$toast.add({severity:'success', summary: 'Successful', detail:data.deletedCount + ' Products Deleted', life: 3000});
-                })
-                .catch(err=>{
-                  this.$toast.add({severity:'error', summary:'Error Message', detail:'Something went worng', life: 3000});
-                  console.log(err)})
-           this.deleteSelectedDialog=false;
-
-
-        },
-        viewProduct(product)
-        {
-      this.viewDialog=!this.viewDialog;
-      this.product=product
-        },
-        editProduct(product){
-            this.editDialog=!this.editDialog;
-            this.editingProduct=product;
-        },
-openNew(){
-this.InputDialog=!this.InputDialog
-},
-     exportCSV() {
-            this.$refs.dt.exportCSV();
-        },
-        confirmDeleteProduct(product)
-        {
-          console.log(product._id)
-           let _id=product._id
-         this.$confirm.require({
-                message: 'Do you want to delete this record?',
-                header: 'Delete Confirmation',
-                icon: 'pi pi-info-circle',
-                acceptClass: 'p-button-danger',
-                accept: () => {
-
-                    fetch(this.api+'/'+_id,{
-                    method:'DELETE',
-                })
-                .then(()=>{
-                   
-                     this.products=this.products.filter((product)=>{
-                       return product._id!==_id
-                          })
-                  this.$toast.add({severity:'success', summary:'Confirmed', detail:'Record deleted', life: 3000});
-                })
-                .catch(err=>{
-                  this.$toast.add({severity:'error', summary:'Error', detail:'Something went worng', life: 3000});
-                  console.log(err)})
-                    
-                },
-                reject: () => {
-                   // this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected deletion', life: 3000});
-                }
+        .then((res) => {
+          this.selectedProducts.forEach((element) => {
+            this.products = this.products.filter((product) => {
+              return product._id !== element._id;
             });
-        }
+          });
+
+          this.selectedProducts = [];
+
+          return res.json();
+        })
+        .then((data) => {
+          //console.log(data.deletedCount)
+          this.$toast.add({
+            severity: "success",
+            summary: "Successful",
+            detail: data.deletedCount + " Products Deleted",
+            life: 3000,
+          });
+        })
+        .catch((err) => {
+          this.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "Something went worng",
+            life: 3000,
+          });
+          console.log(err);
+        });
+      this.deleteSelectedDialog = false;
+    },
+    viewProduct(product) {
+      this.viewDialog = !this.viewDialog;
+      this.product = product;
+    },
+    editProduct(product) {
+      this.editDialog = !this.editDialog;
+      this.editingProduct = product;
+    },
+    openNew() {
+      this.InputDialog = !this.InputDialog;
+    },
+    exportCSV() {
+      this.$refs.dt.exportCSV();
+    },
+    confirmDeleteProduct(product) {
+      console.log(product._id);
+      let _id = product._id;
+      this.$confirm.require({
+        message: "Do you want to delete this record?",
+        header: "Delete Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        accept: () => {
+          fetch(this.api + "/" + _id, {
+            method: "DELETE",
+          })
+            .then(() => {
+              this.products = this.products.filter((product) => {
+                return product._id !== _id;
+              });
+              this.$toast.add({
+                severity: "success",
+                summary: "Confirmed",
+                detail: "Record deleted",
+                life: 3000,
+              });
+            })
+            .catch((err) => {
+              this.$toast.add({
+                severity: "error",
+                summary: "Error",
+                detail: "Something went worng",
+                life: 3000,
+              });
+              console.log(err);
+            });
+        },
+        reject: () => {
+          // this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected deletion', life: 3000});
+        },
+      });
+    },
   },
 };
 </script>
@@ -722,110 +865,108 @@ this.InputDialog=!this.InputDialog
   }
 }
 
-
 div.table-title {
-   display: block;
+  display: block;
   margin: auto;
   max-width: 600px;
-  padding:5px;
+  padding: 5px;
   width: 100%;
 }
 
 .table-title h3 {
-   color: #fafafa;
-   font-size: 30px;
-   font-weight: 400;
-   font-style:normal;
-   font-family: "Roboto", helvetica, arial, sans-serif;
-   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-   text-transform:uppercase;
+  color: #fafafa;
+  font-size: 30px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Roboto", helvetica, arial, sans-serif;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
 }
-
 
 /*** Table Styles **/
 
 .table-fill {
   background: white;
-  border-radius:3px;
+  border-radius: 3px;
   border-collapse: collapse;
   height: 320px;
   margin: auto;
-  padding:5px;
+  padding: 5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
- 
+
 th {
-  color:#D5DDE5;;
-  background:#1b1e24;
-  border-bottom:4px solid #9ea7af;
+  color: #d5dde5;
+  background: #1b1e24;
+  border-bottom: 4px solid #9ea7af;
   border-right: 1px solid #343a45;
-  font-size:23px;
+  font-size: 23px;
   font-weight: 100;
-  padding:24px;
-  text-align:left;
+  padding: 24px;
+  text-align: left;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 th:first-child {
-  border-top-left-radius:3px;
+  border-top-left-radius: 3px;
 }
- 
+
 th:last-child {
-  border-top-right-radius:3px;
-  border-right:none;
+  border-top-right-radius: 3px;
+  border-right: none;
 }
-  
+
 tr {
-  border-top: 1px solid #C1C3D1;
-  border-bottom: 1px solid #C1C3D1;
-  color:#666B85;
-  font-size:16px;
-  font-weight:normal;
+  border-top: 1px solid #c1c3d1;
+  border-bottom: 1px solid #c1c3d1;
+  color: #666b85;
+  font-size: 16px;
+  font-weight: normal;
   text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
- 
+
 tr:hover td {
-  background:#4E5066;
-  color:#FFFFFF;
+  background: #4e5066;
+  color: #ffffff;
   border-top: 1px solid #22262e;
 }
- 
+
 tr:first-child {
-  border-top:none;
+  border-top: none;
 }
 
 tr:last-child {
-  border-bottom:none;
+  border-bottom: none;
 }
- 
+
 tr:nth-child(odd) td {
-  background:#EBEBEB;
+  background: #ebebeb;
 }
- 
+
 tr:nth-child(odd):hover td {
-  background:#4E5066;
+  background: #4e5066;
 }
 
 tr:last-child td:first-child {
-  border-bottom-left-radius:3px;
+  border-bottom-left-radius: 3px;
 }
- 
+
 tr:last-child td:last-child {
-  border-bottom-right-radius:3px;
+  border-bottom-right-radius: 3px;
 }
- 
+
 td {
-  background:#FFFFFF;
-  padding:20px;
-  text-align:left;
-  vertical-align:middle;
-  font-weight:300;
-  font-size:18px;
+  background: #ffffff;
+  padding: 20px;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 18px;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #C1C3D1;
+  border-right: 1px solid #c1c3d1;
 }
 
 td:last-child {
@@ -855,11 +996,10 @@ td.text-center {
 td.text-right {
   text-align: right;
 }
-.product-description{
-
-width:100%;
-/**border: 1px solid green;**/
-padding: 4px;
-border-radius: 5px;
+.product-description {
+  width: 100%;
+  /**border: 1px solid green;**/
+  padding: 4px;
+  border-radius: 5px;
 }
 </style>
