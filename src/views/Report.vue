@@ -16,7 +16,7 @@
     <br>
         <div id="summary" >
 	<h4>All products at a glance</h4>
-  <table  class="table table-bordered">
+  <table  class="table table-bordered table-striped">
           <thead><tr>
             <th>SL. no</th>
             <th>Product Category</th>
@@ -31,7 +31,7 @@
           </tbody>
         </table>
 
-
+        <br>
 
         </div>
 	</TabPanel>
@@ -52,7 +52,7 @@
 		   
         <div v-for="category in filteredCategories2">
         <h5>{{category.name}} used by Authority</h5>
-        <table class="table table-striped">
+        <table class="table table-bordered table-striped">
           <thead><tr>
             <th>SL. no</th>
             <th>Section</th>
@@ -66,7 +66,7 @@
           </tr>
           </tbody>
          </table>
-
+          <br>
         </div>
 
         </div>
@@ -108,6 +108,8 @@
             </tr>
           </tbody>
             </table>
+            <br>
+            
 
           </div>        
         
@@ -145,7 +147,7 @@
             </tr>
           </tbody>
             </table>
-
+               <br>
           </div>
         
         
