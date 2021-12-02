@@ -320,9 +320,11 @@
       :style="{ width: '70vw' }"
       :maximizable="true"
       :modal="true"
+      @hide="inputSave()"
+      ref="inputDialogref"
     >
       <div class="p-mt-3">
-        <InputForm @emitReload="reload" />
+        <InputForm @emitReload="reload" ref="myInputForm"></InputForm>
       </div>
     </Dialog>
 
@@ -590,6 +592,7 @@
 </template>
 
 <script>
+//import { ref } from "vue";
 import EditForm from "../components/editForm.vue";
 import InputForm from "../components/InputForm.vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
@@ -642,6 +645,8 @@ export default {
     this.productService.getDepartments().then((data) => {
       this.departments = data;
     });
+
+    setInterval(this.reload, 1000);
   },
   methods: {
     async printProduct(printId) {
@@ -660,11 +665,22 @@ export default {
       });
     },
     reload() {
-      this.loading1 = true;
+      //this.loading1 = true;
       this.productService.getProducts().then((data) => {
         this.products = data;
-        this.loading1 = false;
+        // this.loading1 = false;
       });
+
+      this.productService.getCategories().then((data) => {
+        this.categories = data;
+        //console.log(this.categories);
+      });
+
+      this.productService.getDepartments().then((data) => {
+        this.departments = data;
+      });
+
+      //console.log("reloaded");
     },
     formatDate(value) {
       return value.toLocaleDateString("en-GB", {
@@ -802,6 +818,16 @@ export default {
           // this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected deletion', life: 3000});
         },
       });
+    },
+    inputSave() {
+      //console.log("method triggered");
+      //console.log(this.$refs.inputDialogref.$slots.$refs);
+      /*try {
+        this.$refs.myInputForm.saveToLocal();
+      } catch (err) {
+        console.log(err);
+      }
+      ///this.$refs.myInputForm.saveToLocal();*/
     },
   },
 };
