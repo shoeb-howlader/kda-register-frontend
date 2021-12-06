@@ -49,8 +49,13 @@
 
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   mounted() {
+    this.initiateProducts();
+    setInterval(this.reload, 1000);
+    //////
+
     if (localStorage.getItem("theme")) {
       let themeElement = document.getElementById("theme-link");
       themeElement.setAttribute(
@@ -214,6 +219,14 @@ export default {
       init();
     });
   },
+  computed: {
+    ...mapState([
+      // ...
+      "products",
+      "departments",
+      "categories",
+    ]),
+  },
   data() {
     return {
       items: [
@@ -223,6 +236,14 @@ export default {
         { label: "Settings", icon: "pi pi-fw pi-cog", to: "/settings" },
       ],
     };
+  },
+  methods: {
+    ...mapMutations([
+      "SET_PRODUCTS",
+      "DELETE_PRODUCTS",
+      "DELETE_SELECTED_PRODUCTS",
+    ]),
+    ...mapActions(["initiateProducts", "reload"]),
   },
 };
 

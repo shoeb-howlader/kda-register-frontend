@@ -84,7 +84,7 @@
             <div class="p-col-5">
                 <div class="box">
                     
-        <DataTable :value="deparments" showGridlines responsiveLayout="scroll">
+        <DataTable :value="departments" showGridlines responsiveLayout="scroll">
             <Column field="name" header="Departments"></Column>
             
         </DataTable>
@@ -130,13 +130,14 @@
     </div>
 </template>
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 import ProductService from "../service/ProductService";
 export default {
   data() {
     return {
-      categories: [],
-      deparments: [],
-      designations: [],
+      //categories: [],
+      //deparments: [],
+      //designations: [],
       CategoryName: "",
       departmentName: "",
       designationName: "",
@@ -145,15 +146,6 @@ export default {
       departmentSubmitted: false,
       designationSubmitted: false,
       themes: [
-        "md-light-indigo",
-        "md-light-deeppurple",
-
-        "md-dark-indigo",
-        "md-dark-deeppurple",
-        "mdc-light-indigo",
-        "mdc-light-deeppurple",
-        "mdc-dark-indigo",
-        "mdc-dark-deeppurple",
         "tailwind-light",
         "fluent-light",
         "saga-blue",
@@ -169,20 +161,17 @@ export default {
   created() {
     this.productService = new ProductService();
   },
-  mounted() {
-    this.productService.getCategories().then((data) => {
-      this.categories = data;
-    });
-
-    this.productService.getDepartments().then((data) => {
-      this.deparments = data;
-    });
-
-    this.productService.getDesignations().then((data) => {
-      this.designations = data;
-    });
+  mounted() {},
+  computed: {
+    ...mapState([
+      // ...
+      "departments",
+      "categories",
+      "designations",
+    ]),
   },
   methods: {
+    ...mapMutations(["ADD_DEPARTMENT", "ADD_CATEGORY", "ADD_DESIGNATION"]),
     addCategory() {
       this.categorySubmitted = true;
       if (!this.CategoryName) {
@@ -211,7 +200,7 @@ export default {
               summary: "Category inserted successfully",
               life: 3000,
             });
-            this.categories.push(category);
+            this.ADD_CATEGORY(category);
             (this.CategoryName = ""), (this.categorySubmitted = false);
           })
           .catch((err) => {
@@ -253,7 +242,7 @@ export default {
               summary: "Category inserted successfully",
               life: 3000,
             });
-            this.designations.push(designation);
+            this.ADD_DESIGNATION(designation);
             (this.designationName = ""), (this.designationSubmitted = false);
           })
           .catch((err) => {
@@ -295,7 +284,7 @@ export default {
               summary: "Category inserted successfully",
               life: 3000,
             });
-            this.deparments.push(department);
+            this.ADD_DEPARTMENT(department);
             (this.departmentName = ""), (this.departmentSubmitted = false);
           })
           .catch((err) => {

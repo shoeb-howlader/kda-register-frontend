@@ -593,6 +593,7 @@
 
 <script>
 //import { ref } from "vue";
+import { mapState, mapMutations, mapActions } from "vuex";
 import EditForm from "../components/editForm.vue";
 import InputForm from "../components/InputForm.vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
@@ -602,7 +603,6 @@ export default {
   data() {
     return {
       api: process.env.VUE_APP_API_PRODUCT,
-      products: [],
       customers1: null,
       customers2: null,
       filters1: null,
@@ -615,46 +615,44 @@ export default {
       editingProduct: null,
       filteredRows: null,
       dUserText: null,
-      departments: [],
-      categories: [],
       statuses: [
         { name: "Active", value: "Active" },
         { name: "Inactive", value: "Inactive" },
         { name: "Instock", value: "Instock" },
       ],
-      loading1: true,
-      loading2: true,
+
+      loading2: false,
     };
+  },
+  computed: {
+    ...mapState([
+      // ...
+      "products",
+      "departments",
+      "categories",
+      "loading1",
+    ]),
   },
   created() {
     this.productService = new ProductService();
     this.initFilters1();
     //console.log(process.env.VUE_APP_API_PRODUCT)
   },
-  mounted() {
-    this.productService.getProducts().then((data) => {
-      this.products = data;
-      this.loading1 = false;
-    });
-
-    this.productService.getCategories().then((data) => {
-      this.categories = data;
-      //console.log(this.categories);
-    });
-
-    this.productService.getDepartments().then((data) => {
-      this.departments = data;
-    });
-
-    setInterval(this.reload, 1000);
-  },
+  mounted() {},
   methods: {
+    ...mapMutations([
+      "SET_PRODUCTS",
+      "DELETE_PRODUCTS",
+      "DELETE_SELECTED_PRODUCTS",
+    ]),
+    ...mapActions(["initiateProducts", "reload"]),
+
     async printProduct(printId) {
       // Pass the element id here
       await this.$htmlToPaper(printId);
     },
     countRows(data) {
-      console.log(data.length);
+      //console.log(data.length);
       this.filteredRows = data.length;
     },
     onColReorder() {
@@ -663,24 +661,6 @@ export default {
         summary: "Column Reordered",
         life: 3000,
       });
-    },
-    reload() {
-      //this.loading1 = true;
-      this.productService.getProducts().then((data) => {
-        this.products = data;
-        // this.loading1 = false;
-      });
-
-      this.productService.getCategories().then((data) => {
-        this.categories = data;
-        //console.log(this.categories);
-      });
-
-      this.productService.getDepartments().then((data) => {
-        this.departments = data;
-      });
-
-      //console.log("reloaded");
     },
     formatDate(value) {
       return value.toLocaleDateString("en-GB", {
@@ -737,14 +717,8 @@ export default {
         body: JSON.stringify(query),
       })
         .then((res) => {
-          this.selectedProducts.forEach((element) => {
-            this.products = this.products.filter((product) => {
-              return product._id !== element._id;
-            });
-          });
-
+          this.DELETE_SELECTED_PRODUCTS(this.selectedProducts);
           this.selectedProducts = [];
-
           return res.json();
         })
         .then((data) => {
@@ -782,7 +756,7 @@ export default {
       this.$refs.dt.exportCSV();
     },
     confirmDeleteProduct(product) {
-      console.log(product._id);
+      //console.log(product._id);
       let _id = product._id;
       this.$confirm.require({
         message: "Do you want to delete this record?",
@@ -794,9 +768,11 @@ export default {
             method: "DELETE",
           })
             .then(() => {
-              this.products = this.products.filter((product) => {
+              /* this.products = this.products.filter((product) => {
                 return product._id !== _id;
-              });
+              });*/
+              this.DELETE_PRODUCTS(product);
+
               this.$toast.add({
                 severity: "success",
                 summary: "Confirmed",

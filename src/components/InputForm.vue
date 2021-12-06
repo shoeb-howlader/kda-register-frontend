@@ -253,6 +253,7 @@
 
 </template>
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 import CustomizedEditor from "./CustomizedEditor.vue";
 import ProductService from "../service/ProductService";
 export default {
@@ -281,9 +282,9 @@ export default {
           comment: "",
         },
       ],
-      categories: [],
-      designations: [],
-      departments: [],
+      //categories: [],
+      //designations: [],
+      //departments: [],
       statusOptions: ["Active", "Instock", "Inactive"],
     };
   },
@@ -303,19 +304,15 @@ export default {
     if (localStorage.getItem("category"))
       this.supplyDescription = localStorage.getItem("category");
   },
+  computed: {
+    ...mapState([
+      // ...
+      "departments",
+      "categories",
+      "designations",
+    ]),
+  },
   mounted() {
-    this.productService.getCategories().then((data) => {
-      this.categories = data;
-      //
-    });
-
-    this.productService.getDepartments().then((data) => {
-      this.departments = data;
-    });
-
-    this.productService.getDesignations().then((data) => {
-      this.designations = data;
-    });
     setInterval(this.saveToLocal, 1000);
   },
   methods: {

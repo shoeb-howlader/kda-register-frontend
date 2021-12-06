@@ -187,40 +187,29 @@
     </Card>
 </template>
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 import ProductService from "../service/ProductService";
 export default {
   data() {
     return {
-      products: [],
-      categories: [],
-      departments: [],
+      // products: [],
+      // categories: [],
+      // departments: [],
       filteredDepartments: [],
       filteredCategories: [],
       filteredCategories2: [],
       filteredDepartments2: [],
     };
   },
-  created() {
-    this.productService = new ProductService();
-
-    //console.log(process.env.VUE_APP_API_PRODUCT)
+  created() {},
+  computed: {
+    ...mapState([
+      // ...
+      "products",
+      "departments",
+      "categories",
+    ]),
   },
-  mounted() {
-    this.productService.getProducts().then((data) => {
-      this.products = data;
-      //console.log(this.products);
-    });
-
-    this.productService.getCategories().then((data) => {
-      this.categories = data;
-      //console.log(this.categories);
-    });
-
-    this.productService.getDepartments().then((data) => {
-      this.departments = data;
-    });
-  },
-  computed: {},
   methods: {
     async print(printId) {
       // Pass the element id here
