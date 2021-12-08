@@ -4,7 +4,9 @@ import router from './router'
 import store from './store'
 
 /////print libray
-//import VueHtmlToPaper from 'vue-html-to-paper';
+//imported axios
+import Axios from 'axios'
+
 
 ///imported locally , if support arises it will be added
 import VueHtmlToPaper from '../src/service/vue-html-to-paper';
@@ -124,7 +126,12 @@ app.use(PrimeVue);
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
-
+//axios for all component
+app.config.globalProperties.$http = Axios;
+const token = localStorage.getItem('token')
+if (token) {
+  app.config.globalProperties.$http.defaults.headers.common['Authorization'] =`Bearer ${token}`
+}
 ////// printing options 
 const options = {
     name: '_blank',

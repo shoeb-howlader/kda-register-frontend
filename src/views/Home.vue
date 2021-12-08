@@ -631,6 +631,7 @@ export default {
       "departments",
       "categories",
       "loading1",
+      "token",
     ]),
   },
   created() {
@@ -713,7 +714,10 @@ export default {
       };
       fetch(this.api + "/", {
         method: "DELETE",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
         body: JSON.stringify(query),
       })
         .then((res) => {
@@ -764,9 +768,11 @@ export default {
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
         accept: () => {
-          fetch(this.api + "/" + _id, {
+          /*fetch(this.api + "/" + _id, {
             method: "DELETE",
-          })
+          })*/
+          this.$http
+            .delete(this.api + "/" + _id)
             .then(() => {
               /* this.products = this.products.filter((product) => {
                 return product._id !== _id;

@@ -376,11 +376,8 @@ export default {
         userDetails: this.userDetails,
       };
 
-      fetch(this.api, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(product),
-      })
+      this.$http
+        .post(this.api, product)
         .then(() => {
           //this.$router.push('/')
           this.isLoading = false;

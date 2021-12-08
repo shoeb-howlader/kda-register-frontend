@@ -1,18 +1,19 @@
 <template lang="">
+<Toast/>
     <div class="login-bg">
 
         <div class="login-box">
   <h2>Login</h2>
-  <form>
+  <form @submit.prevent="userLogin">
     <div class="user-box">
-      <input type="text" name="" required="">
-      <label>Username</label>
+      <input type="text" name="" required="" v-model="email">
+      <label>Email</label>
     </div>
     <div class="user-box">
-      <input type="password" name="" required="">
+      <input type="password" name="" required="" v-model="password">
       <label>Password</label>
     </div>
-    <a href="#">
+    <a href="#" @click="userLogin">
       <span></span>
       <span></span>
       <span></span>
@@ -24,7 +25,79 @@
     </div>
 </template>
 <script>
-export default {};
+import { mapState, mapMutations, mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      api: process.env.VUE_APP_API_LOGIN,
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    ...mapState([
+      // ...
+      "status",
+    ]),
+  },
+  methods: {
+    ...mapActions(["login"]),
+    userLogin() {
+      //console.log(this.api);
+      let user = {
+        email: this.email,
+        password: this.password,
+      };
+      this.login(user)
+        .then(() => {
+          this.$router.push("/");
+          this.$toast.add({
+            severity: "success",
+            summary: "Login Succesful",
+            life: 3000,
+          });
+        })
+        .catch((err) => {
+          //console.log(err)
+          this.$toast.add({
+            severity: "error",
+            summary: "Authetication failed",
+            life: 3000,
+          });
+        });
+      //
+      /*await axios
+        .post(
+          this.api,
+          {
+            email: this.email,
+            password: this.password,
+          },
+          {
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          this.$toast.add({
+            severity: "success",
+            summary: "Login Succesful",
+            life: 3000,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toast.add({
+            severity: "error",
+            summary: "Authetication failed",
+            life: 3000,
+          });
+        });*/
+    },
+  },
+};
 </script>
 <style lang="css">
 /*html {

@@ -187,11 +187,8 @@ export default {
           value: this.CategoryName,
         };
 
-        fetch(process.env.VUE_APP_API_CATEGORY, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(category),
-        })
+        this.$http
+          .post(process.env.VUE_APP_API_CATEGORY, category)
           .then(() => {
             //this.$router.push('/')
             this.isLoading = false;
@@ -229,11 +226,8 @@ export default {
           value: this.designationName,
         };
 
-        fetch(process.env.VUE_APP_API_DESIGNATION, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(designation),
-        })
+        this.$http
+          .post(process.env.VUE_APP_API_DESIGNATION, designation)
           .then(() => {
             //this.$router.push('/')
             this.isLoading = false;
@@ -271,11 +265,8 @@ export default {
           value: this.departmentName,
         };
 
-        fetch(process.env.VUE_APP_API_DEPARTMENT, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(department),
-        })
+        this.$http
+          .post(process.env.VUE_APP_API_DEPARTMENT, department)
           .then(() => {
             //this.$router.push('/')
             this.isLoading = false;

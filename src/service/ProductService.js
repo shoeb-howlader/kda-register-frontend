@@ -1,48 +1,72 @@
-export default class ProductService {
+import axios from "axios";
+import store from '../store'
 
-    getProductsSmall() {
-		return fetch('products-small.json').then(res => res.json()).then(d => d.data);
-	}
+
+export default class ProductService {
+  constructor() {
+    axios.defaults.headers.common['Authorization'] =`Bearer ${store.state.token}`
+  }
 
 	async getProducts() {
-		//return fetch('./products.json').then(res => res.json()).then(d => d.data);
-
-    
-        let response = await fetch('/api/products');
-        let data = await response.json();
-        //data=data.data;
-        //console.log(data);
-        data.forEach(product =>{ product.date = new Date(product.date)
-        product.userDetails.forEach(user=>user.date = new Date(user.date))
-        });
-       
-        return data;
+        try {
+          let response = await axios.get('/api/products');
+          let data =response.data;
+          data.forEach(product =>{ product.date = new Date(product.date)
+            product.userDetails.forEach(user=>user.date = new Date(user.date))
+            });
+            return data;
+        } catch (error) {
+          return error;
+        }  
     }
 
     async getCategories(){
       
       
-      let response = await fetch('/api/categories');
-      let data = await response.json();
-      return data;
+      //let response = await fetch('/api/categories');
+      try {
+        let response = await axios.get('/api/categories');
+        let data =response.data;
+          return data;
+      } catch (error) {
+        return error;
+      } 
 
     }
 
     async getDepartments(){
-      
-      
-      let response = await fetch('/api/departments');
-      let data = await response.json();
-      return data;
+
+     try {
+        let response = await axios.get('/api/departments');
+        let data =response.data;
+          return data;
+      } catch (error) {
+        return error;
+      } 
 
     }
 
     async getDesignations(){
-      
-      
-      let response = await fetch('/api/designations');
-      let data = await response.json();
-      return data;
 
+      try {
+        let response = await axios.get('/api/designations');
+        let data =response.data;
+          return data;
+      } catch (error) {
+        return error;
+      } 
+
+    }
+
+    async getTokenExpired()
+    {
+      axios.interceptors.response.use(undefined, function (err) {
+        return new Promise(function (resolve, reject) {
+          if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+            store.dispatch(logout)
+          }
+          throw err;
+        });
+      });
     }
 }

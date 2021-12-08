@@ -27,7 +27,13 @@
               />
             </template>
             <template #end>
-              <h3 style="font-family: ">KDA Computer Cell Register</h3>
+              <!--h3 style="font-family: ">KDA Computer Cell Register</!--h3-->
+              <Button
+                label="Logout"
+                class="p-button-raised p-button-danger"
+                @click="UserLogout"
+                v-if="isLoggedIn"
+              />
             </template>
           </Menubar>
         </div>
@@ -51,9 +57,21 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
+  created() {
+    this.$http.interceptors.response.use(undefined, function (err) {
+      return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch(logout);
+        }
+        throw err;
+      });
+    });
+  },
   mounted() {
-    this.initiateProducts();
-    setInterval(this.reload, 1000);
+    if (this.isLoggedIn) {
+      this.initiateProducts();
+      setInterval(this.reload, 1000);
+    }
     //////
 
     if (localStorage.getItem("theme")) {
@@ -220,6 +238,9 @@ export default {
     });
   },
   computed: {
+    isLoggedIn: function () {
+      return this.$store.getters.isLoggedIn;
+    },
     ...mapState([
       // ...
       "products",
@@ -238,12 +259,17 @@ export default {
     };
   },
   methods: {
+    UserLogout() {
+      this.logout().then(() => {
+        this.$router.push("/login");
+      });
+    },
     ...mapMutations([
       "SET_PRODUCTS",
       "DELETE_PRODUCTS",
       "DELETE_SELECTED_PRODUCTS",
     ]),
-    ...mapActions(["initiateProducts", "reload"]),
+    ...mapActions(["initiateProducts", "reload", "logout"]),
   },
 };
 

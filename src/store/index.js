@@ -1,4 +1,5 @@
 import { createStore, storeKey } from 'vuex'
+import axios from 'axios'
 import ProductService from "../service/ProductService";
 export default createStore({
   state: {
@@ -6,8 +7,15 @@ export default createStore({
     departments: [],
     categories: [],
     designations:[],
-    loading1:true
+    loading1:true,
+    status: '',
+    token: localStorage.getItem('token') || '',
+    user : {}
 
+  },
+  getters : {
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.status,
   },
   mutations: {
     SET_PRODUCTS(state,products)
@@ -50,7 +58,22 @@ export default createStore({
     SET_LOADING(state,value)
     {
       state.loading1=value;
-    }
+    },
+    auth_request(state){
+      state.status = 'loading'
+    },
+    auth_success(state, token, user){
+      state.status = 'success'
+      state.token = token
+      state.user = user
+    },
+    auth_error(state){
+      state.status = 'error'
+    },
+    logout(state){
+      state.status = ''
+      state.token = ''
+    },
 
   },
   actions: {
@@ -79,7 +102,9 @@ export default createStore({
       this.productService.getProducts().then((data) => {
        commit('SET_PRODUCTS',data)
        commit('SET_LOADING',false)
-      });
+      })
+      .catch((err)=>{commit('SET_LOADING',true)});
+
       this.productService.getCategories().then((data) => {
         commit('SET_CATEGORIES',data)
       });
@@ -88,13 +113,45 @@ export default createStore({
         commit('SET_DEPARTMENTS',data)
       });
 
-      this.productService.getDepartments().then((data) => {
+      this.productService.getDesignations().then((data) => {
         commit('SET_DESIGNATIONS',data)
       });
+
+      this.productService.getTokenExpired();
 
 
     },
    
+    login({commit}, user){
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios({url: process.env.VUE_APP_API_LOGIN, data: user, method: 'POST' })
+        .then(resp => {
+          const token = resp.data.token
+          const user = resp.data.user
+          localStorage.setItem('token', token)
+          axios.defaults.headers.common['Authorization'] = token
+          commit('auth_success', token, user)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('auth_error')
+          localStorage.removeItem('token')
+          reject(err)
+        })
+      })
+  },
+  logout({commit}){
+    return new Promise((resolve, reject) => {
+      commit('logout')
+      localStorage.removeItem('token')
+      delete axios.defaults.headers.common['Authorization']
+      resolve()
+    })
+  }
+
+
+
   },
   modules: {
   }

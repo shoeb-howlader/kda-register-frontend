@@ -370,11 +370,8 @@ export default {
         userDetails: this.userDetails,
       };
 
-      fetch(this.api + "/" + this.product._id, {
-        method: "PUT",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(product),
-      })
+      this.$http
+        .put(this.api + "/" + this.product._id, product)
         .then(() => {
           //this.$router.push('/')
           this.isLoading = false;
