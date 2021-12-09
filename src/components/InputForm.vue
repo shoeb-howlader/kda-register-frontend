@@ -296,13 +296,13 @@ export default {
     if (localStorage.getItem("supplier"))
       this.supplier = localStorage.getItem("supplier");
     if (localStorage.getItem("date") != "null") {
-      console.log(this.date);
+      // console.log(this.date);
       this.date = new Date(localStorage.getItem("date"));
     }
     if (localStorage.getItem("productDescription"))
       this.productDescription = localStorage.getItem("productDescription");
     if (localStorage.getItem("category"))
-      this.supplyDescription = localStorage.getItem("category");
+      this.supplyDescription = localStorage.getItem("supplyDescription");
   },
   computed: {
     ...mapState([
@@ -420,7 +420,6 @@ export default {
       } else {
         localStorage.setItem("date", this.date);
       }
-
       localStorage.setItem("productDescription", this.productDescription);
       localStorage.setItem("supplyDescription", this.supplyDescription);
     },
