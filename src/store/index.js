@@ -78,6 +78,8 @@ export default createStore({
   },
   actions: {
     initiateProducts({commit}){
+      if(this.getters.isLoggedIn)
+      {
       this.productService = new ProductService();
       this.productService.getProducts().then((data) => {
        commit('SET_PRODUCTS',data)
@@ -95,8 +97,12 @@ export default createStore({
       this.productService.getDepartments().then((data) => {
         commit('SET_DESIGNATIONS',data)
       });
+      }
     },
   reload({commit}){
+     if(this.getters.isLoggedIn)
+     {
+      
     
       this.productService = new ProductService();
       this.productService.getProducts().then((data) => {
@@ -119,13 +125,13 @@ export default createStore({
 
       this.productService.getTokenExpired();
 
-
+    }
     },
    
-    login({commit}, user){
+   login({commit}, user){
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({url: process.env.VUE_APP_API_LOGIN, data: user, method: 'POST' })
+       axios({url: process.env.VUE_APP_API_LOGIN, data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user

@@ -42,13 +42,13 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    userLogin() {
+    async userLogin() {
       //console.log(this.api);
       let user = {
         email: this.email,
         password: this.password,
       };
-      this.login(user)
+      await this.login(user)
         .then(() => {
           this.$router.push("/");
           this.$toast.add({
@@ -127,14 +127,15 @@ body {
   padding: 57px;
   font-family: sans-serif;
   background: linear-gradient(#141e30, #243b55);
+  /*background: linear-gradient(#141e30, #243b55d6);*/
   padding-bottom: 57px;
   width: 500px;
-  border-radius: 56px;
+  border-radius: 12px;
   margin-top: 5%;
 }
 .login-box {
   margin: auto;
-  width: 400px;
+  /*width: 400px;*/
   padding: 40px;
   background: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;

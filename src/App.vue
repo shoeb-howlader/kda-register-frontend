@@ -68,11 +68,8 @@ export default {
     });
   },
   mounted() {
-    if (this.isLoggedIn) {
-      this.initiateProducts();
-      setInterval(this.reload, 1000);
-    }
-    //////
+    this.initiateProducts();
+    setInterval(this.reload, 1000);
 
     if (localStorage.getItem("theme")) {
       let themeElement = document.getElementById("theme-link");

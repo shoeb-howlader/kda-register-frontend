@@ -8,8 +8,9 @@ export default class ProductService {
   }
 
 	async getProducts() {
+    
         try {
-          let response = await axios.get('/api/products');
+          let response = await axios.get('/api/products',{headers:{Authorization:`Bearer ${store.state.token}`}});
           let data =response.data;
           data.forEach(product =>{ product.date = new Date(product.date)
             product.userDetails.forEach(user=>user.date = new Date(user.date))
@@ -25,7 +26,7 @@ export default class ProductService {
       
       //let response = await fetch('/api/categories');
       try {
-        let response = await axios.get('/api/categories');
+        let response = await axios.get('/api/categories',{headers:{Authorization:`Bearer ${store.state.token}`}});
         let data =response.data;
           return data;
       } catch (error) {
@@ -37,7 +38,7 @@ export default class ProductService {
     async getDepartments(){
 
      try {
-        let response = await axios.get('/api/departments');
+        let response = await axios.get('/api/departments',{headers:{Authorization:`Bearer ${store.state.token}`}});
         let data =response.data;
           return data;
       } catch (error) {
@@ -49,7 +50,7 @@ export default class ProductService {
     async getDesignations(){
 
       try {
-        let response = await axios.get('/api/designations');
+        let response = await axios.get('/api/designations',{headers:{Authorization:`Bearer ${store.state.token}`}});
         let data =response.data;
           return data;
       } catch (error) {
