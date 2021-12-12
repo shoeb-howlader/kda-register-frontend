@@ -68,7 +68,7 @@
               v-model="date"
               :showIcon="true"
               required="true"
-              dateFormat="dd.mm.yy"
+              dateFormat="dd/mm/yy"
               :class="{ 'p-invalid': !date && submitted }"
             />
             <label for="date">Purchase Date</label>
@@ -202,7 +202,7 @@
                   id="date"
                   v-model="user.date"
                   :showIcon="true"
-                  dateFormat="dd.mm.yy"
+                  dateFormat="dd/mm/yy"
                 />
                 <label for="date">Issue Date</label>
               </div>

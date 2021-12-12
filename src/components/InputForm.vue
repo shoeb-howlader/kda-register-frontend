@@ -68,7 +68,7 @@
               v-model="date"
               :showIcon="true"
               required="true"
-              dateFormat="dd.mm.yy"
+              dateFormat="dd/mm/yy"
               autocomplete="off"
               :manualInput="true"
               :class="{ 'p-invalid': !date && submitted }"
@@ -203,7 +203,7 @@
                   id="date"
                   v-model="user.date"
                   :showIcon="true"
-                  dateFormat="dd.mm.yy"
+                  dateFormat="dd/mm/yy"
                 />
                 <label for="date">Issue Date</label>
               </div>

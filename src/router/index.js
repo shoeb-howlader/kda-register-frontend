@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Report from '../views/Report.vue'
 import Settings from '../views/Settings.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 import store from '../store'
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
 
   {
     path: '/about',
@@ -43,6 +49,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
+
 ]
 
 const router = createRouter({
