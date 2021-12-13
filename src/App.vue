@@ -12,6 +12,7 @@
   <Card
     style="background-color: #f8f9fa; margin-bottom: 10px; padding: 0px"
     class="navbar p-mt-1"
+    v-if="isLoggedIn"
   >
     <template #content style="padding: 0px">
       <div class="p-grid p-jc-center">
@@ -310,7 +311,8 @@ canvas {
 .horizontal-scroll {
   width: 100%;
   height: 300px;
-  background: url("http://mckenziedave.co.uk/1st-touch/footer_fr.png");
+  //background: url("http://mckenziedave.co.uk/1st-touch/footer_fr.png");
+  background: url("./assets/footer/footer_fr.png");
   -webkit-animation: backgroundScroll 400s linear infinite;
   animation: backgroundScroll 60s linear infinite;
   background-repeat: no-repeat;
@@ -337,7 +339,8 @@ canvas {
 .horizontal-scroll2 {
   width: 100%;
   height: 200px;
-  background: url("http://mckenziedave.co.uk/1st-touch/footer_bg.png");
+  //background: url("http://mckenziedave.co.uk/1st-touch/footer_bg.png");
+  background: url("./assets/footer/footer_bg.png");
   -webkit-animation: backgroundScroll2 400s linear infinite;
   animation: backgroundScroll2 30s linear infinite;
   background-repeat: no-repeat;

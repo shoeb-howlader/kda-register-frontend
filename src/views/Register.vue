@@ -6,11 +6,11 @@
   <h2>Register</h2>
   <form @submit.prevent="userLogin">
     <div class="user-box">
-      <input type="text" name="" required="" v-model="email">
+      <input type="text" name="" required="" v-model="name">
       <label>Name</label>
     </div>
     <div class="user-box">
-      <input type="text" name="" required="" v-model="email">
+      <input type="text" name="" required="" v-model="username">
       <label>User Name</label>
     </div>
     <div class="user-box">
@@ -22,15 +22,12 @@
       <label>Password</label>
     </div>
     <div class="user-box">
-      <input type="password" name="" required="" v-model="password">
+      <input type="password" name="" required="" v-model="confirmPassword">
       <label>Confirm Password</label>
     </div>
-    <div class="user-box">
-      <input type="file" name="" required="" >
-      <label>Confirm Password</label>
-    </div>
+    
 
-    <a href="#" @click="userLogin">
+    <a href="#" @click="userRegister">
       <span></span>
       <span></span>
       <span></span>
@@ -48,7 +45,10 @@ export default {
     return {
       api: process.env.VUE_APP_API_LOGIN,
       email: "",
+      name: "",
+      username: "",
       password: "",
+      confirmPassword: "",
     };
   },
   computed: {
@@ -58,30 +58,40 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(["login"]),
-    async userLogin() {
+    ...mapActions(["register"]),
+    async userRegister() {
       //console.log(this.api);
-      let user = {
-        email: this.email,
-        password: this.password,
-      };
-      await this.login(user)
-        .then(() => {
-          this.$router.push("/");
-          this.$toast.add({
-            severity: "success",
-            summary: "Login Succesful",
-            life: 3000,
-          });
-        })
-        .catch((err) => {
-          //console.log(err)
-          this.$toast.add({
-            severity: "error",
-            summary: "Authetication failed",
-            life: 3000,
-          });
+      if (this.confirmPassword !== this.password) {
+        this.$toast.add({
+          severity: "error",
+          summary: "password not matched",
+          life: 3000,
         });
+      } else {
+        let user = {
+          name: this.name,
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        };
+        await this.register(user)
+          .then(() => {
+            this.$router.push("/login");
+            this.$toast.add({
+              severity: "success",
+              summary: "Login Succesful",
+              life: 3000,
+            });
+          })
+          .catch((err) => {
+            //console.log(err)
+            this.$toast.add({
+              severity: "error",
+              summary: "Registration failed",
+              life: 3000,
+            });
+          });
+      }
     },
   },
 };

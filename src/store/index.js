@@ -154,8 +154,20 @@ export default createStore({
       delete axios.defaults.headers.common['Authorization']
       resolve()
     })
-  }
+  },
 
+ register({commit,dispatch}, user){
+      return new Promise((resolve, reject) => { 
+       axios({url: process.env.VUE_APP_API_REGISTER, data: user, method: 'POST' })
+        .then(resp => {
+          dispatch('logout')
+          resolve(resp)
+        })
+        .catch(err => {
+          reject(err)
+        })
+      })
+  },
 
 
   },

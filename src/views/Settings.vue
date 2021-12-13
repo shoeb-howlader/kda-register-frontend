@@ -3,7 +3,12 @@
     <div>
        <card>
           <template #content>
-       <Fieldset legend="Edit Categories" :toggleable="true">
+            <Fieldset legend="Add new user" :toggleable="true" >
+              <Button label="Add user" class="p-button-raised p-button-success" @click="goToRegister()" >
+                </Button>
+          
+            </Fieldset>
+       <Fieldset legend="Edit Categories" :toggleable="true" class="p-mt-5">
       
         <div class="p-grid p-jc-center">
             <div class="p-col-5">
@@ -172,6 +177,9 @@ export default {
   },
   methods: {
     ...mapMutations(["ADD_DEPARTMENT", "ADD_CATEGORY", "ADD_DESIGNATION"]),
+    goToRegister() {
+      this.$router.push("/register");
+    },
     addCategory() {
       this.categorySubmitted = true;
       if (!this.CategoryName) {
