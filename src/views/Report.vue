@@ -21,12 +21,78 @@
             <th>SL. no</th>
             <th>Product Category</th>
             <th>Number(active)</th>
+            <th>Number(In-active)</th>
+            <th>Number(In-stock)</th>
           </tr></thead>
           <tbody>
           <tr v-for="(category,index) in categories" :key="category._id">
             <td>{{index+1}}</td>
             <td>{{category.name}}</td>
             <td>{{categoryWiseCount(category.name)}}</td>
+            <td>{{ categoryWiseInactiveCount(category.name)}}</td>
+            <td>{{ categoryWiseInstockCount(category.name)}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br>
+
+        </div>
+	</TabPanel>
+  <TabPanel header="Summary(In-Active)">
+    <Toolbar>
+    <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('summary_inactive')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
+    </template>
+</Toolbar>
+    <br>
+        <div id="summary_inactive" >
+	<h4>All In-Active  products at a glance</h4>
+  <table  class="table table-bordered table-striped">
+          <thead><tr>
+            <th>SL. no</th>
+            <th>Product Category</th>
+            <th>Number(In-active)</th>
+          </tr></thead>
+          <tbody>
+          <tr v-for="(category,index) in categories" :key="category._id">
+            <td>{{index+1}}</td>
+            <td>{{category.name}}</td>
+            <td>{{ categoryWiseInactiveCount(category.name)}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br>
+
+        </div>
+	</TabPanel>
+   <TabPanel header="Summary(In-Stock)">
+    <Toolbar>
+    <template #end>
+ <Button type="button" class="p-button-outlined p-button-success" @click="print('summary_instock')">
+            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
+            <span class="p-ml-2 p-text-bold">Print</span>
+        </Button>
+    </template>
+</Toolbar>
+    <br>
+        <div id="summary_instock" >
+	<h4>All In-Stock  products at a glance</h4>
+  <table  class="table table-bordered table-striped">
+          <thead><tr>
+            <th>SL. no</th>
+            <th>Product Category</th>
+            <th>Number(In-stock)</th>
+          </tr></thead>
+          <tbody>
+          <tr v-for="(category,index) in categories" :key="category._id">
+            <td>{{index+1}}</td>
+            <td>{{category.name}}</td>
+            <td>{{ categoryWiseInstockCount(category.name)}}</td>
           </tr>
           </tbody>
         </table>
@@ -227,6 +293,31 @@ export default {
       //console.log(count)
       return count;
     },
+      categoryWiseInactiveCount(category) {
+      // console.log(category)
+      const count = this.products.filter(function (item) {
+        if (item.category === category && item.status === "Inactive") {
+          return true;
+        } else {
+          return false;
+        }
+      }).length;
+      //console.log(count)
+      return count;
+    },
+    categoryWiseInstockCount(category){
+      // console.log(category)
+      const count = this.products.filter(function (item) {
+        if (item.category === category && item.status === "Instock") {
+          return true;
+        } else {
+          return false;
+        }
+      }).length;
+      //console.log(count)
+      return count;
+    },
+
     departmentWiseCount(department, category) {
       //console.log(category)
       const count = this.products.filter(function (item) {
