@@ -6,12 +6,23 @@
        <TabView>
 	<TabPanel header="Summary">
     <Toolbar>
-    <template #end>
- <Button type="button" class="p-button-outlined p-button-success" @click="print('summary')">
-            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
-            <span class="p-ml-2 p-text-bold">Print</span>
-        </Button>
+      <template #start>
+  <MultiSelect v-model="filteredStatuses" :options="statuses" optionLabel="name" placeholder="Select Status" display="chip" :filter="true" class="p-ml-2" />
     </template>
+    <template #end>
+  <Button
+    type="button"
+    class="p-button-outlined p-button-success"
+    @click="print('summary')"
+  >
+    <img
+      alt="logo"
+      src="https://img.icons8.com/color/48/000000/print.png"
+      style="width: 1.5rem"
+    />
+    <span class="p-ml-2 p-text-bold">Print</span>
+  </Button>
+</template>
 </Toolbar>
     <br>
         <div id="summary" >
@@ -20,17 +31,14 @@
           <thead><tr>
             <th>SL. no</th>
             <th>Product Category</th>
-            <th>Number(active)</th>
-            <th>Number(In-active)</th>
-            <th>Number(In-stock)</th>
+            <th v-for="status in filteredStatuses">{{status.name}}</th>
           </tr></thead>
           <tbody>
           <tr v-for="(category,index) in categories" :key="category._id">
             <td>{{index+1}}</td>
             <td>{{category.name}}</td>
-            <td>{{categoryWiseCount(category.name)}}</td>
-            <td>{{ categoryWiseInactiveCount(category.name)}}</td>
-            <td>{{ categoryWiseInstockCount(category.name)}}</td>
+            <td v-for="status in filteredStatuses">{{categoryWiseCount(category.name,status.value)}}</td>
+            
           </tr>
           </tbody>
         </table>
@@ -39,68 +47,8 @@
 
         </div>
 	</TabPanel>
-  <TabPanel header="Summary(In-Active)">
-    <Toolbar>
-    <template #end>
- <Button type="button" class="p-button-outlined p-button-success" @click="print('summary_inactive')">
-            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
-            <span class="p-ml-2 p-text-bold">Print</span>
-        </Button>
-    </template>
-</Toolbar>
-    <br>
-        <div id="summary_inactive" >
-	<h4>All In-Active  products at a glance</h4>
-  <table  class="table table-bordered table-striped">
-          <thead><tr>
-            <th>SL. no</th>
-            <th>Product Category</th>
-            <th>Number(In-active)</th>
-          </tr></thead>
-          <tbody>
-          <tr v-for="(category,index) in categories" :key="category._id">
-            <td>{{index+1}}</td>
-            <td>{{category.name}}</td>
-            <td>{{ categoryWiseInactiveCount(category.name)}}</td>
-          </tr>
-          </tbody>
-        </table>
 
-        <br>
 
-        </div>
-	</TabPanel>
-   <TabPanel header="Summary(In-Stock)">
-    <Toolbar>
-    <template #end>
- <Button type="button" class="p-button-outlined p-button-success" @click="print('summary_instock')">
-            <img alt="logo" src="https://img.icons8.com/color/48/000000/print.png" style="width: 1.5rem" />
-            <span class="p-ml-2 p-text-bold">Print</span>
-        </Button>
-    </template>
-</Toolbar>
-    <br>
-        <div id="summary_instock" >
-	<h4>All In-Stock  products at a glance</h4>
-  <table  class="table table-bordered table-striped">
-          <thead><tr>
-            <th>SL. no</th>
-            <th>Product Category</th>
-            <th>Number(In-stock)</th>
-          </tr></thead>
-          <tbody>
-          <tr v-for="(category,index) in categories" :key="category._id">
-            <td>{{index+1}}</td>
-            <td>{{category.name}}</td>
-            <td>{{ categoryWiseInstockCount(category.name)}}</td>
-          </tr>
-          </tbody>
-        </table>
-
-        <br>
-
-        </div>
-	</TabPanel>
 
 	<TabPanel header="Department wise product list">
     <Toolbar>
@@ -261,13 +209,21 @@ export default {
       // products: [],
       // categories: [],
       // departments: [],
+      statuses: [
+        { name: "Active", value: "Active" },
+        { name: "In-Active", value: "Inactive" },
+        { name: "In-Stock", value: "Instock" },
+      ],
       filteredDepartments: [],
       filteredCategories: [],
       filteredCategories2: [],
       filteredDepartments2: [],
+      filteredStatuses: [],
     };
   },
-  created() {},
+  created() {
+    this.filteredStatuses = this.statuses;
+  },
   computed: {
     ...mapState([
       // ...
@@ -281,10 +237,10 @@ export default {
       // Pass the element id here
       await this.$htmlToPaper(printId);
     },
-    categoryWiseCount(category) {
+    categoryWiseCount(category, status = "Active") {
       // console.log(category)
       const count = this.products.filter(function (item) {
-        if (item.category === category && item.status === "Active") {
+        if (item.category === category && item.status === status) {
           return true;
         } else {
           return false;
@@ -293,7 +249,7 @@ export default {
       //console.log(count)
       return count;
     },
-      categoryWiseInactiveCount(category) {
+    categoryWiseInactiveCount(category) {
       // console.log(category)
       const count = this.products.filter(function (item) {
         if (item.category === category && item.status === "Inactive") {
@@ -305,7 +261,7 @@ export default {
       //console.log(count)
       return count;
     },
-    categoryWiseInstockCount(category){
+    categoryWiseInstockCount(category) {
       // console.log(category)
       const count = this.products.filter(function (item) {
         if (item.category === category && item.status === "Instock") {
