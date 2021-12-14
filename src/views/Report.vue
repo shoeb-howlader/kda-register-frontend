@@ -27,7 +27,7 @@
     <br>
         <div id="summary" >
 	<h4>All products at a glance</h4>
-  <table  class="table table-bordered table-striped">
+  <table  class="table table-bordered table-striped border-dark">
           <thead><tr>
             <th>SL. no</th>
             <th>Product Category</th>
@@ -66,7 +66,7 @@
 		   
         <div v-for="category in filteredCategories2">
         <h5>{{category.name}} used by Authority</h5>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped border-dark">
           <thead><tr>
             <th>SL. no</th>
             <th>Section</th>
@@ -105,7 +105,7 @@
         <div v-for="category in filteredCategories">
           <div v-for="department in filteredDepartments">
             <h4>{{department.name}}-{{category.name}} user list</h4>
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered border-dark">
              <thead><tr>
             <th>SL. no</th>
             <th>Name</th>
@@ -146,7 +146,7 @@
         <div v-for="department in filteredDepartments2">
           <h4>{{department.name}} Product list</h4>
           <div >
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered border-dark">
              <thead><tr>
             <th>SL. no</th>
             <th>Category</th>
